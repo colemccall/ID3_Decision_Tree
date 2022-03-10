@@ -21,6 +21,8 @@ namespace ML_DecisionTreeClassifier
 {
     public partial class MainWindow : Window
     {
+        private string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -200,72 +202,60 @@ namespace ML_DecisionTreeClassifier
 
         private void CircuitButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier"; 
             string filepath = filedir + "\\testDataA4\\circuit.in";
             ReadFile(filepath);
         }
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
-
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier"; 
             string filepath = filedir + "\\testDataA4\\continue.in";
             ReadFile(filepath);
         }
 
         private void Continue0Button_Click(object sender, RoutedEventArgs e)
         {
-
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier"; 
             string filepath = filedir + "\\testDataA4\\continue0.in";
             ReadFile(filepath);
         }
 
         private void Continue2Button_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\continue2.in";
             ReadFile(filepath);
         }
 
         private void GolfButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\golf.in";
             ReadFile(filepath);
         }
 
         private void GolfcButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\golfc.in";
             ReadFile(filepath);
         }
 
         private void NotaButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\nota.in";
             ReadFile(filepath);
         }
 
         private void OrButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\or.in";
             ReadFile(filepath);
         }
 
         private void Parity3Button_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\parity3.in";
             ReadFile(filepath);
         }
 
         private void RestaurantButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\restaurantDecisionTree.in";
             ReadFile(filepath);
         }
@@ -279,35 +269,30 @@ namespace ML_DecisionTreeClassifier
 
         private void SomeParity3_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath =filedir + "\\testDataA4\\someparity3.in";
             ReadFile(filepath);
         }
 
         private void Split_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\split.in";
             ReadFile(filepath);
         }
 
         private void TooLittleButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\toolittle.in";
             ReadFile(filepath);
         }
 
         private void XorButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\xor.in";
             ReadFile(filepath);
         }
 
         private void XorcButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\xorc.in";
             ReadFile(filepath);
         }
