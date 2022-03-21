@@ -42,7 +42,6 @@ namespace ML_DecisionTreeClassifier
 
         private void RunA_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\a.in";
             ReadFile(filepath);
         }
@@ -64,6 +63,9 @@ namespace ML_DecisionTreeClassifier
                 //List to keep trakc of what types of data each class is 
                 List<char> dataTypes = new List<char>();
 
+                //List to keep track of what possible attributes there are 
+                List<string> attributeList = new List<string>();
+
                 //Parse the next few lines to get classes and possible values
                 for (int i = 1; i <= numberOfClasses + 1; i++)
                 {
@@ -75,30 +77,46 @@ namespace ML_DecisionTreeClassifier
                     
                     //First partition is the class name -> called type
                     string type = parts[0];
-                    classes.Add(type);
 
-                    //check if the data is continuous
-                    if (parts[1] == "continuous")
+
+                    /* ERROR OCCURS HERE WHEN ATTIBUTE LIST IS A STRING*/
+                    //if the class is the answer, check to see if it has already been added to the list
+                    if (type.ToLower() == "ans")
                     {
-                        dataTypes.Add('C');
+                        classes.Add(type);
+                        dataTypes.Add('S');
+                        for (int a = 1; a < parts.Length; a++)
+                           attributeList.Add(parts[a]);
                     }
-
-                    //otherwise, parse the data as an int
                     else
                     {
-                        try
-                        {
-                            int current = int.Parse(parts[1]);
+                        classes.Add(type);
 
-                            dataTypes.Add('I');
-                        }
-                        catch (Exception ex)
+                        //check if the data is continuous
+                        if (parts[1] == "continuous")
                         {
-
-                            dataTypes.Add('S');
+                            dataTypes.Add('C');
                         }
-                        
+
+                        //otherwise, parse the data as an int
+                        else
+                        {
+                            try
+                            {
+                                int current = int.Parse(parts[1]);
+
+                                dataTypes.Add('I');
+                            }
+                            catch (Exception ex)
+                            {
+
+                                dataTypes.Add('S');
+                            }
+                        }
                     }
+
+
+                    
                 }
 
                 //Print what each classes data type is to the display window
@@ -174,10 +192,21 @@ namespace ML_DecisionTreeClassifier
                             Display.Text += node.word + " ";
                     }
 
+
+                    //Add the data from each line to a list of tuples
                     tuples.Add(currentLine);
                     Display.Text += "\n";
-                }
 
+
+
+
+
+
+
+                }
+                Display.Text += "\nAnswers\n";
+                foreach (string answerPossibility in attributeList)
+                    Display.Text += answerPossibility + " ";
 
                 reader.Close();
 
@@ -262,7 +291,6 @@ namespace ML_DecisionTreeClassifier
 
         private void SimpleButton_Click(object sender, RoutedEventArgs e)
         {
-            string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
             string filepath = filedir + "\\testDataA4\\simple.in";
             ReadFile(filepath);
         }

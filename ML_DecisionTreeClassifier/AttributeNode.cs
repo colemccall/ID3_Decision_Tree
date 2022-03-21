@@ -35,5 +35,12 @@ namespace ML_DecisionTreeClassifier
             this.dataType = dataType;
             this.continuous = data;
         }
+
+        public AttributeNode()
+        {
+            classLabel = null;
+            word = null;
+           
+        }
     }
 }

@@ -8,13 +8,22 @@ namespace ML_DecisionTreeClassifier
 {
     public class Tree
     {
-        public Tree()
+        public Tree(List<List<AttributeNode>> tuples)
         {
+            Data = tuples;            
+        }
 
+        public void BuildTree()
+        {
+            
         }
 
 
-        public TreeNode Root = new TreeNode();
+
+       
+
+
+        public TreeNode Root { get; set; }
         public List<List<AttributeNode>> Data = new List<List<AttributeNode>>();
     }
 }

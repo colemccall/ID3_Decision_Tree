@@ -8,20 +8,19 @@ namespace ML_DecisionTreeClassifier
 {
     public class TreeNode
     {
-        
-        //Default Constructor
-        public TreeNode()
+        public TreeNode(AttributeNode child)
         {
-            Attribute = string.Empty;
-            Type = string.Empty;
+            node = child;
         }
 
+        
 
-        //Constructor
-        public TreeNode(string attribute, string type)
+
+
+        //Method for adding a child to the list of children
+        public void AddChild(AttributeNode child)
         {
-            Attribute = attribute;
-            Type = type;
+            Children.Add(new TreeNode(child));
         }
 
 
@@ -30,9 +29,13 @@ namespace ML_DecisionTreeClassifier
         //Children List
         public List<TreeNode> Children = new List<TreeNode>();
 
+        
+        //variable for determining if node is a leaf or had children
+        public bool IsLeaf { get; set; }
 
-        //Variables
-        public string Attribute { get; set; }
-        public string Type { get; set; }   
+        //Object created to help store training tuples
+        public AttributeNode node { get; set; }
+
+        public double informationGain { get; set; }
     }
 }
