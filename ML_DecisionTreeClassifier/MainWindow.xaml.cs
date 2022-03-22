@@ -79,7 +79,6 @@ namespace ML_DecisionTreeClassifier
                     string type = parts[0];
 
 
-                    /* ERROR OCCURS HERE WHEN ATTIBUTE LIST IS A STRING*/
                     //if the class is the answer, check to see if it has already been added to the list
                     if (type.ToLower() == "ans")
                     {
@@ -196,22 +195,31 @@ namespace ML_DecisionTreeClassifier
                     //Add the data from each line to a list of tuples
                     tuples.Add(currentLine);
                     Display.Text += "\n";
-
-
-
-
-
-
-
                 }
+
+
+                //display possible answers
                 Display.Text += "\nAnswers\n";
                 foreach (string answerPossibility in attributeList)
                     Display.Text += answerPossibility + " ";
 
+
+                //close file
                 reader.Close();
 
 
+                //quick read for easy comparision
                 SpeedRead(filePath);
+
+
+                //build decision tree
+                Tree DecisionTree = new Tree(tuples, attributeList);
+
+                //output information gain as test
+                for(int i = 0; i < numberOfClasses; i++)
+                    Display.Text += DecisionTree.informationGain(i);
+
+
             }
             catch (Exception ex)
             {
