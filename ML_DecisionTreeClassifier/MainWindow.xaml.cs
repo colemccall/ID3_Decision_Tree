@@ -56,6 +56,7 @@ namespace ML_DecisionTreeClassifier
                 //Read in number of classes
                 int numberOfClasses = Convert.ToInt32(reader.ReadLine());
                 Display.Text = "Number of classes: " + numberOfClasses.ToString() + "\n";
+                Test.Text = "";
 
                 //List to keep track of what classes this file contains
                 List<string> classes = new List<string>();
@@ -202,6 +203,7 @@ namespace ML_DecisionTreeClassifier
                 Display.Text += "\nAnswers\n";
                 foreach (string answerPossibility in attributeList)
                     Display.Text += answerPossibility + " ";
+                Display.Text += "\n";
 
 
                 //close file
@@ -217,7 +219,7 @@ namespace ML_DecisionTreeClassifier
 
                 //output information gain as test
                 for(int i = 0; i < numberOfClasses; i++)
-                    Display.Text += DecisionTree.informationGain(i);
+                    Test.Text += DecisionTree.calculateInformationGain(i);
 
 
             }

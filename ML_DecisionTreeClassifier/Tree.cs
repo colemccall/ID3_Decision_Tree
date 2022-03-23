@@ -17,7 +17,7 @@ namespace ML_DecisionTreeClassifier
         public void BuildTree()
         {
             //Create a node N
-            TreeNode node = new TreeNode();
+            TreeNode node = new TreeNode(); //have a method getMaxInfoGain A-0.82
 
             //If tuples in D are all of the same class, return N as a leaf node labeled with the class C
             if(checkClasses())
@@ -56,7 +56,7 @@ namespace ML_DecisionTreeClassifier
         }
 
 
-        public string informationGain(int attribute)
+        public string calculateInformationGain(int attribute)
         {
             //get the data type of this specifc attribute
             char dataType = TupleData.ElementAt(0).ElementAt(attribute).dataType;
@@ -66,54 +66,204 @@ namespace ML_DecisionTreeClassifier
 
             //create counters for however many times each class is found
             /*--------Possible values are zero and one, needs to be changed if more output classes are required--------*/
-            double freqZero = 0, freqOne = 0, totalFreq = 0, falseZero = 0, falseOne = 0;
-            //List<Data> freqData = new List<Data>(); 
+            List<Data> freqData = new List<Data>();
+            double total = 0;
 
-
+            //Get frequency of each word
             for (int i = 0; i < TupleData.Count; i++)
             {
                 //Get the attribute contents at current position and at the answer
                 AttributeNode currentNode = TupleData.ElementAt(i).ElementAt(attribute);
                 AttributeNode answerNode = TupleData.ElementAt(i).Last();
 
-
-                //if the answer is a 0, then add 1 to both zero and total
-                if (answerNode.word == "0" && currentNode.integer == 0)
+                //if working with words
+                if (currentNode.dataType == 'S')
                 {
-                    freqZero++;
-                    totalFreq++;
+                    bool containsData = false;
+                    foreach (Data data in freqData)
+                    {
+                        if (data.doesContain(currentNode.word))
+                        {
+                            containsData = true;
+                            data.count++;
+                            total++;
+                            break;
+                        }
+                    }
+
+                    if (!containsData)
+                    {
+                        Data newData = new Data(currentNode.word, currentNode.classLabel);
+                        freqData.Add(newData);
+                        total++;
+                    }
+
                 }
 
-                //otherwise add to the total and 1 class
-                else if (answerNode.word == "1" && currentNode.integer == 1)
+                //if working with integers
+                else if (currentNode.dataType == 'I')
                 {
-                    freqOne++;
-                    totalFreq++;
+                    bool containsData = false;
+                    foreach (Data data in freqData)
+                    {
+                        if (data.doesContain(currentNode.integer))
+                        {
+                            containsData = true;
+                            data.count++;
+                            total++;
+                            break;
+                        }
+                    }
+
+                    if (!containsData)
+                    {
+                        Data newData = new Data(currentNode.integer, currentNode.classLabel);
+                        freqData.Add(newData);
+                        total++;
+                    }
                 }
 
-                else if (answerNode.word == "1" && currentNode.integer == 0)
+                //if working with continuous data
+                else if (currentNode.dataType == 'C')
                 {
-                    falseZero++;
-                    totalFreq++;
-                }
-                else
-                {
-                    falseOne++;
-                    totalFreq++;
-                }
+                    bool containsData = false;
+                    foreach (Data data in freqData)
+                    {
+                        if (currentNode.continuous == data.continous)
+                        {
+                            containsData = true;
+                            data.count++;
+                            total++;
+                            break;
+                        }
+                    }
 
+                    if (!containsData)
+                    {
+                        Data newData = new Data(currentNode.continuous, currentNode.classLabel);
+                        freqData.Add(newData);
+                        total++;
+                    }
+
+                }
             }
-                
-            //calculate the probability of zero class and one class
-            double probZero = (freqZero / totalFreq);
-            double probOne = freqOne / totalFreq;
 
-            string output = "\nProbability of 0 is " + probZero.ToString() + " ";
-            output += "\nProbability of 1 " + probOne + " ";
-            
+            //parallel lists for storing the probabilties of each attribute
+            List<string> attributes = new List<string>();
+            List<double> probabilties = new List<double>();
+            List<string> possibilties = new List<string>();
+            string output = "";
 
-            return output;
+            if (dataType == 'S')
+            {
+                //calculate the probability of each class
+                foreach (Data data in freqData)
+                {
+                    output += data.word + " is found " + data.count + "/" + total + " times\n";
+                    double currentProb;
+                    double currentCount = Convert.ToDouble(data.count);
+                    currentProb = currentCount / total;
+
+                    attributes.Add(data.attributeType);
+                    probabilties.Add(currentProb);
+
+                    if (!possibilties.Contains(data.attributeType))
+                        possibilties.Add(data.attributeType);
+                }
+            }
+            else if (dataType == 'I')
+            {
+                foreach (Data data in freqData)
+                {
+                    output += data.integer + " is found " + data.count + "/" + total + " times\n";
+                    double currentProb;
+                    double currentCount = Convert.ToDouble(data.count);
+                    currentProb = currentCount / total;
+
+                    attributes.Add(data.attributeType);
+                    probabilties.Add(currentProb);
+
+                    if (!possibilties.Contains(data.attributeType))
+                        possibilties.Add(data.attributeType);
+                }
+            }
+
+            else if (dataType == 'C')
+            {
+                foreach (Data data in freqData)
+                {
+                    output += data.continous + " is found " + data.count + "/" + total + " times\n";
+                    double currentProb;
+                    double currentCount = Convert.ToDouble(data.count);
+                    currentProb = currentCount / total;
+
+                    attributes.Add(data.attributeType);
+                    probabilties.Add(currentProb);
+
+                    if (!possibilties.Contains(data.attributeType))
+                        possibilties.Add(data.attributeType);
+                }
+            }
+
+            return getEntropy(attributes, possibilties, probabilties);
         }
+
+
+        public string getEntropy(List<string> attributes, List<string> possibilities, List<double> probabilties)
+        {
+            string entropy = "";
+            List<double> entropies = new List<double>();
+            List<int> classesPerAttribute = new List<int>();
+
+            //for each attribute on the list, find how many possible classes there are
+            foreach (string possibility in possibilities)
+            {
+                //total entropy for one attribute
+                int numberOfClasses = 0;
+                for (int i = 0; i < attributes.Count; i++)
+                {
+                    //forreach attribute on the list calculate the enrtopy
+                    if (attributes[i] == possibility)
+                    {
+                        numberOfClasses++;
+                    }
+                }
+                classesPerAttribute.Add(numberOfClasses);
+            }
+
+
+
+            //for each attribute on the list, calculate the entropy
+            for (int x = 0; x < possibilities.Count(); x++)
+            {
+                //total entropy for one attribute
+                double attributeEntropy = 0;
+                for (int i = 0; i < attributes.Count; i++)
+                {
+                    //forreach attribute on the list calculate the enrtopy
+                    if (attributes[i] == possibilities[x])
+                    {
+                        double currentProb = probabilties[i];
+                        double valueEntropy = currentProb * Math.Log(currentProb, classesPerAttribute[x]);
+                        attributeEntropy += valueEntropy;
+                    }
+                }
+
+                double flipNegativeEntropy = attributeEntropy - attributeEntropy - (attributeEntropy);
+                entropies.Add(flipNegativeEntropy);
+            }
+
+
+            //print out all entropies
+            for(int i = 0; i < entropies.Count; i++)
+            { 
+                entropy += "Entropy for " + possibilities[i] + " is " + entropies[i].ToString() + "\n";
+                entropy += "Information Gain for " + possibilities[i] + " is " + (1 - entropies[i]) + "\n\n";
+            }
+
+            return entropy;
+        }
+
 
 
         //take each tuple in Data and check if they all result in the same answer

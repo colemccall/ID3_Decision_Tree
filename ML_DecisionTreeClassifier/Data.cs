@@ -8,21 +8,27 @@ namespace ML_DecisionTreeClassifier
 {
     public class Data    
     {
-        public Data(string word)
+        public Data(string word, string attributeType)
         {
             this.word = word;
+            this.attributeType = attributeType;
+
             count++;
         }
 
-        public Data(double value)
+        public Data(double value, string attributeType)
         {
             this.continous = value;
+            this.attributeType = attributeType;
+
             count++;
         }
 
-        public Data(int value)
+        public Data(int value, string attributeType)
         {
             this.integer = value;
+            this.attributeType = attributeType;
+
             count++;
         }
 
@@ -36,5 +42,28 @@ namespace ML_DecisionTreeClassifier
         public int integer;
         public double continous;
         public string word;
+        public string attributeType;
+
+
+        //test method to see if word exists in struct
+        public bool doesContain(string word)
+        {
+            if (this.word == word)
+                return true;
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool doesContain(int value)
+        {
+            if (this.integer == value)
+                return true;
+            else
+            {
+                return false;
+            }
+        }
     }
 }
