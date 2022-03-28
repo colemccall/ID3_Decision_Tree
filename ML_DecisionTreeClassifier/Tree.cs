@@ -8,43 +8,85 @@ namespace ML_DecisionTreeClassifier
 {
     public class Tree
     {
-        public Tree(List<List<AttributeNode>> tuples, List<string> attributeList)
+        public Tree(List<List<AttributeNode>> tuples, List<string> attributeList, int numberOfClasses)
         {
             TupleData = tuples;
             AttributeList = attributeList;
+            this.numberOfClasses = numberOfClasses;
         }
 
         public void BuildTree()
         {
-            //Create a node N
-            TreeNode node = new TreeNode(); //have a method getMaxInfoGain A-0.82
-
-            //If tuples in D are all of the same class, return N as a leaf node labeled with the class C
-            if (checkClasses())
+            //find the information gain of all possible nodes available
+            List<TreeNode> possibleNodes = new List<TreeNode>();
+            for (int i = 0; i < numberOfClasses; i++)
             {
-                node.IsLeaf = true;
-                //node.type = C
-                Root.AddChild(node);
+                possibleNodes.Add(calculateInformationGain(i));
             }
 
-            //If the list of possible attributes is empty, return N as a leaf node with the majority class in D
-            if (AttributeList == null)
+            //create the root based on whichever node has the most information gain
+            root = getMaxGain(possibleNodes);
+
+            //TOTALLY INCORRECT, just creating for testing
+            while(possibleNodes.Count > 0)
+                root.AddNode(getMaxGain(possibleNodes));
+        }
+
+        public string testGains()
+        {
+            string display = ViewTree(root);
+            for (int i = 0; i < root.OtherNodes.Count; i++)
             {
-                node.IsLeaf = true;
-                //node.type = majorityClass
-                Root.AddChild(node);
+                display += root.OtherNodes[i].View();
             }
-
-            //find the best splitting criterion
-
-
+            return display;
         }
 
 
+        
+       
+
+        //method to view any node and its children on the tree
+        private string ViewTree(TreeNode current)
+        {
+            //starting with the root, view all nodes on the tree using a recursion
+            string display = current.View();
+            
+
+            if (current.Children.Count > 0)
+            {
+                for (int i = 0; i < current.Children.Count; i++)
+                {
+                    TreeNode child = current.Children[i];
+                    display += ViewTree(child);
+                }
+            }
+
+            return display;
+        }
+
+        //method to view all nodes on the tree
+        public string ViewAll() { return ViewTree(root); }
 
 
+        private TreeNode getMaxGain(List<TreeNode> treeNodes)
+        {
+            TreeNode maxGain = new TreeNode();
+            foreach (TreeNode node in treeNodes)
+            {
+                if (node.informationGain > maxGain.informationGain)
+                    maxGain = node;
+            }
+            
 
-        public string calculateInformationGain(int attribute)
+            //REMOVE THIS LINE LATER - JUST FOR TESTING
+            treeNodes.Remove(maxGain);
+
+            return maxGain;
+        }
+
+
+        private TreeNode calculateInformationGain(int attribute)
         {
             //get the data type of this specifc attribute
             char dataType = TupleData.ElementAt(0).ElementAt(attribute).dataType;
@@ -300,9 +342,7 @@ namespace ML_DecisionTreeClassifier
             finalOutput += "Needed information for " + possibilities[0] + " is " + Math.Round(finalInformationNeeded, 3) + "\n";
             finalOutput += "Information gain for " + possibilities[0] + " is " + Math.Round(finalInformationGain, 3) + "\n\n\n";
 
-
-
-            return finalOutput;
+            return new TreeNode(finalExpectedInformation, finalInformationNeeded, finalInformationGain, possibilities[0], possibilities);
         }
 
 
@@ -310,7 +350,7 @@ namespace ML_DecisionTreeClassifier
 
 
         /********************Information Expected Calculations**********************************/
-        public double getInformationExpected(List<double> expectedInformation)
+        private double getInformationExpected(List<double> expectedInformation)
         {
             double flippedExpectedInformation = 0;
             for (int i = 0; i < expectedInformation.Count; i++)
@@ -324,7 +364,7 @@ namespace ML_DecisionTreeClassifier
 
 
         /*****************Information Needed Calculations - much more difficult *********************/
-        public double getInformationNeeded(List<string> attributes, List<string> possibilities, List<double> probabilties, List<List<double>> splitProbs)
+        private double getInformationNeeded(List<string> attributes, List<string> possibilities, List<double> probabilties, List<List<double>> splitProbs)
         {
             string entropy = "";
             List<double> expected = new List<double>();
@@ -374,18 +414,18 @@ namespace ML_DecisionTreeClassifier
 
 
             return finalInformationNeeded;
-        } 
+        }
 
 
 
         //take each tuple in Data and check if they all result in the same answer
-        public bool checkClasses()
+        private bool checkClasses()
         {
             //first class is the result of the first training sample
             string firstClass = TupleData[0].Last().classLabel;
 
-            
-            for ( int i = 0; i< TupleData.Count; i++ )
+
+            for (int i = 0; i < TupleData.Count; i++)
             {
                 //currentTuple is one line of training data
                 List<AttributeNode> currentTuple = TupleData[i];
@@ -404,11 +444,13 @@ namespace ML_DecisionTreeClassifier
 
 
 
+        private int numberOfClasses { get; set; }
 
+        private TreeNode root { get; set; }
 
-        public TreeNode Root { get; set; }
-        public List<List<AttributeNode>> TupleData = new List<List<AttributeNode>>();
-        public List<string> AttributeList { get; set; }
+        private List<List<AttributeNode>> TupleData = new List<List<AttributeNode>>();
+
+        private List<string> AttributeList { get; set; }
 
 
 

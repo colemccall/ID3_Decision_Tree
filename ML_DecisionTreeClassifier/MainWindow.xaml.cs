@@ -222,11 +222,11 @@ namespace ML_DecisionTreeClassifier
 
 
                 //build decision tree
-                Tree DecisionTree = new Tree(tuples, attributeList);
+                Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
+                DecisionTree.BuildTree();
+                Test.Text += DecisionTree.testGains();
 
-                //output information gain as test
-                for(int i = 0; i < numberOfClasses; i++)
-                    Test.Text += DecisionTree.calculateInformationGain(i);
+                
                 
 
 
