@@ -10,7 +10,7 @@ namespace ML_DecisionTreeClassifier
     {
         public Tree(List<List<AttributeNode>> tuples, List<string> attributeList)
         {
-            TupleData = tuples;    
+            TupleData = tuples;
             AttributeList = attributeList;
         }
 
@@ -20,7 +20,7 @@ namespace ML_DecisionTreeClassifier
             TreeNode node = new TreeNode(); //have a method getMaxInfoGain A-0.82
 
             //If tuples in D are all of the same class, return N as a leaf node labeled with the class C
-            if(checkClasses())
+            if (checkClasses())
             {
                 node.IsLeaf = true;
                 //node.type = C
@@ -28,7 +28,7 @@ namespace ML_DecisionTreeClassifier
             }
 
             //If the list of possible attributes is empty, return N as a leaf node with the majority class in D
-            if(AttributeList == null)
+            if (AttributeList == null)
             {
                 node.IsLeaf = true;
                 //node.type = majorityClass
@@ -175,7 +175,6 @@ namespace ML_DecisionTreeClassifier
 
 
                     //calculate the probabilities of the answer based on the split on this attribute (Information Needed)
-
                     List<double> answerFrequency = new List<double>();
                     for (int x = 0; x < data.possibleAnswers.Count; x++)
                         answerFrequency.Add(0);
@@ -214,6 +213,29 @@ namespace ML_DecisionTreeClassifier
 
                     if (!possibilities.Contains(data.attributeType))
                         possibilities.Add(data.attributeType);
+
+                    List<double> answerFrequency = new List<double>();
+                    for (int x = 0; x < data.possibleAnswers.Count; x++)
+                        answerFrequency.Add(0);
+
+                    //add counts based on split
+                    for (int x = 0; x < data.answers.Count(); x++)
+                    {
+                        for (int j = 0; j < data.possibleAnswers.Count(); j++)
+                        {
+                            if (data.answers[x] == data.possibleAnswers[j])
+                                answerFrequency[j]++;
+                        }
+                    }
+
+
+                    //divide by the amount of data in the dataset
+                    for (int x = 0; x < answerFrequency.Count; x++)
+                    {
+                        answerFrequency[x] /= currentCount;
+                    }
+
+                    splitProbabilities.Add(answerFrequency);
                 }
             }
 
@@ -274,9 +296,9 @@ namespace ML_DecisionTreeClassifier
 
             //print out all information gains
             string finalOutput = "";
-            finalOutput += "Expected information for " + possibilities[0] + " is " + finalExpectedInformation + "\n";
-            finalOutput += "Needed information for " + possibilities[0] + " is " + finalInformationNeeded + "\n";
-            finalOutput += "Information gain for " + possibilities[0] + " is " + finalInformationGain + "\n\n\n";
+            finalOutput += "Expected information for " + possibilities[0] + " is " + Math.Round(finalExpectedInformation, 3) + "\n";
+            finalOutput += "Needed information for " + possibilities[0] + " is " + Math.Round(finalInformationNeeded, 3) + "\n";
+            finalOutput += "Information gain for " + possibilities[0] + " is " + Math.Round(finalInformationGain, 3) + "\n\n\n";
 
 
 
@@ -342,15 +364,17 @@ namespace ML_DecisionTreeClassifier
 
             //calculate final information needed
             double finalInformationNeeded = 0;
+            int c = 0;
             foreach (List<double> probs in splitProbs)
             {
-                double currentInformationNeeded = expected[0] * getInformationExpected(probs);
+                double currentInformationNeeded = expected[c] * getInformationExpected(probs);
                 finalInformationNeeded += currentInformationNeeded;
+                c++;
             }
-            
+
 
             return finalInformationNeeded;
-        }
+        } 
 
 
 

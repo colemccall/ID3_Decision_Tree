@@ -227,6 +227,7 @@ namespace ML_DecisionTreeClassifier
                 //output information gain as test
                 for(int i = 0; i < numberOfClasses; i++)
                     Test.Text += DecisionTree.calculateInformationGain(i);
+                
 
 
             }
