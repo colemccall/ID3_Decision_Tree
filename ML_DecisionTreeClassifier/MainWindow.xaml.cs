@@ -53,6 +53,8 @@ namespace ML_DecisionTreeClassifier
                 //Open file
                 StreamReader reader = new StreamReader(filePath);
 
+                MessageBox.Show("File opened");
+
                 //Read in number of classes
                 int numberOfClasses = Convert.ToInt32(reader.ReadLine());
                 Display.Text = "Number of classes: " + numberOfClasses.ToString() + "\n";
@@ -86,7 +88,9 @@ namespace ML_DecisionTreeClassifier
                         classes.Add(type);
                         dataTypes.Add('S');
                         for (int a = 1; a < parts.Length; a++)
-                           attributeList.Add(parts[a]);
+                        {
+                            attributeList.Add(parts[a]);
+                        }
                     }
                     else
                     {
@@ -200,9 +204,12 @@ namespace ML_DecisionTreeClassifier
 
 
                 //display possible answers
+                int possibleNumberOfAnswers = 0;
                 Display.Text += "\nAnswers\n";
                 foreach (string answerPossibility in attributeList)
+                {
                     Display.Text += answerPossibility + " ";
+                }
                 Display.Text += "\n";
 
 
@@ -332,6 +339,12 @@ namespace ML_DecisionTreeClassifier
         private void XorcButton_Click(object sender, RoutedEventArgs e)
         {
             string filepath = filedir + "\\testDataA4\\xorc.in";
+            ReadFile(filepath);
+        }
+
+        private void testTree_Click(object sender, RoutedEventArgs e)
+        {
+            string filepath = filedir + "\\testDataA4\\testTree.in";
             ReadFile(filepath);
         }
 

@@ -41,19 +41,7 @@ namespace ML_DecisionTreeClassifier
         }
 
 
-        public void attributeGains(int numberOfAttributes)
-        {
-            //Create a list of information gains based on relevant data
-            //List<double> gains = new List<double>();
-            
-            //For each attribute pair, find information gain
-            for(int i = 0; i < numberOfAttributes - 1; i++)
-            {
-                //gains.Add(informationGain(i));
-            }
 
-            //return gains;
-        }
 
 
         public string calculateInformationGain(int attribute)
@@ -65,9 +53,9 @@ namespace ML_DecisionTreeClassifier
             double infoGain;
 
             //create counters for however many times each class is found
-            /*--------Possible values are zero and one, needs to be changed if more output classes are required--------*/
             List<Data> freqData = new List<Data>();
             double total = 0;
+            int numberOfClassesWithinAttribute = 0;
 
             //Get frequency of each word
             for (int i = 0; i < TupleData.Count; i++)
@@ -86,6 +74,7 @@ namespace ML_DecisionTreeClassifier
                         {
                             containsData = true;
                             data.count++;
+                            data.insert(answerNode.word);
                             total++;
                             break;
                         }
@@ -93,9 +82,10 @@ namespace ML_DecisionTreeClassifier
 
                     if (!containsData)
                     {
-                        Data newData = new Data(currentNode.word, currentNode.classLabel);
+                        Data newData = new Data(currentNode.word, currentNode.classLabel, answerNode.word);
                         freqData.Add(newData);
                         total++;
+                        numberOfClassesWithinAttribute++;
                     }
 
                 }
@@ -110,6 +100,7 @@ namespace ML_DecisionTreeClassifier
                         {
                             containsData = true;
                             data.count++;
+                            data.insert(answerNode.word);
                             total++;
                             break;
                         }
@@ -117,9 +108,11 @@ namespace ML_DecisionTreeClassifier
 
                     if (!containsData)
                     {
-                        Data newData = new Data(currentNode.integer, currentNode.classLabel);
+                        Data newData = new Data(currentNode.integer, currentNode.classLabel, answerNode.word);
                         freqData.Add(newData);
                         total++;
+                        numberOfClassesWithinAttribute++;
+
                     }
                 }
 
@@ -133,6 +126,7 @@ namespace ML_DecisionTreeClassifier
                         {
                             containsData = true;
                             data.count++;
+                            data.insert(answerNode.word);
                             total++;
                             break;
                         }
@@ -140,9 +134,11 @@ namespace ML_DecisionTreeClassifier
 
                     if (!containsData)
                     {
-                        Data newData = new Data(currentNode.continuous, currentNode.classLabel);
+                        Data newData = new Data(currentNode.continuous, currentNode.classLabel, answerNode.word);
                         freqData.Add(newData);
                         total++;
+                        numberOfClassesWithinAttribute++;
+
                     }
 
                 }
@@ -150,8 +146,12 @@ namespace ML_DecisionTreeClassifier
 
             //parallel lists for storing the probabilties of each attribute
             List<string> attributes = new List<string>();
-            List<double> probabilties = new List<double>();
-            List<string> possibilties = new List<string>();
+            List<double> probabilities = new List<double>();
+            List<string> possibilities = new List<string>();
+
+            //list for storing the counts based on split
+            List<List<double>> splitProbabilities = new List<List<double>>();
+
             string output = "";
 
             if (dataType == 'S')
@@ -159,16 +159,45 @@ namespace ML_DecisionTreeClassifier
                 //calculate the probability of each class
                 foreach (Data data in freqData)
                 {
+                    //calculate the probability of each class being randomly selected from the data set (Information Expected)
                     output += data.word + " is found " + data.count + "/" + total + " times\n";
                     double currentProb;
                     double currentCount = Convert.ToDouble(data.count);
                     currentProb = currentCount / total;
 
+                    //add the class and probability of each attribute to parallel arrays
                     attributes.Add(data.attributeType);
-                    probabilties.Add(currentProb);
+                    probabilities.Add(currentProb);
 
-                    if (!possibilties.Contains(data.attributeType))
-                        possibilties.Add(data.attributeType);
+                    //check to see how many classes are possible for each attribute
+                    if (!possibilities.Contains(data.attributeType))
+                        possibilities.Add(data.attributeType);
+
+
+                    //calculate the probabilities of the answer based on the split on this attribute (Information Needed)
+
+                    List<double> answerFrequency = new List<double>();
+                    for (int x = 0; x < data.possibleAnswers.Count; x++)
+                        answerFrequency.Add(0);
+
+                    //add counts based on split
+                    for (int x = 0; x < data.answers.Count(); x++)
+                    {
+                        for (int j = 0; j < data.possibleAnswers.Count(); j++)
+                        {
+                            if (data.answers[x] == data.possibleAnswers[j])
+                                answerFrequency[j]++;
+                        }
+                    }
+
+
+                    //divide by the amount of data in the dataset
+                    for (int x = 0; x < answerFrequency.Count; x++)
+                    {
+                        answerFrequency[x] /= currentCount;
+                    }
+
+                    splitProbabilities.Add(answerFrequency);
                 }
             }
             else if (dataType == 'I')
@@ -181,10 +210,10 @@ namespace ML_DecisionTreeClassifier
                     currentProb = currentCount / total;
 
                     attributes.Add(data.attributeType);
-                    probabilties.Add(currentProb);
+                    probabilities.Add(currentProb);
 
-                    if (!possibilties.Contains(data.attributeType))
-                        possibilties.Add(data.attributeType);
+                    if (!possibilities.Contains(data.attributeType))
+                        possibilities.Add(data.attributeType);
                 }
             }
 
@@ -198,31 +227,94 @@ namespace ML_DecisionTreeClassifier
                     currentProb = currentCount / total;
 
                     attributes.Add(data.attributeType);
-                    probabilties.Add(currentProb);
+                    probabilities.Add(currentProb);
 
-                    if (!possibilties.Contains(data.attributeType))
-                        possibilties.Add(data.attributeType);
+                    if (!possibilities.Contains(data.attributeType))
+                        possibilities.Add(data.attributeType);
                 }
             }
 
-            return getEntropy(attributes, possibilties, probabilties);
+            //get the frequency of each answer
+            List<double> frequencies = new List<double>();
+            List<string> possibleAnswers = new List<string>();
+            for (int a = 0; a < TupleData.Count; a++)
+            {
+                //Get the attribute contents at the answer
+                AttributeNode answerNode = TupleData.ElementAt(a).Last();
+                if (!possibleAnswers.Contains(answerNode.word))
+                {
+                    possibleAnswers.Add(answerNode.word);
+                    frequencies.Add(0);
+                }
+            }
+
+            for (int a = 0; a < TupleData.Count; a++)
+            {
+                AttributeNode answerNode = TupleData.ElementAt(a).Last();
+                for (int j = 0; j < possibleAnswers.Count; j++)
+                {
+                    if (answerNode.word == possibleAnswers[j])
+                        frequencies[j]++;
+                }
+            }
+
+            for (int a = 0; a < frequencies.Count; a++)
+            {
+                frequencies[a] = frequencies[a] / total;
+            }
+
+            /***************************************Prepare Final Calculations*********************************/
+
+            //Calculate the expected information based on frequencies already found
+            double finalExpectedInformation = getInformationExpected(frequencies);
+            double finalInformationNeeded = getInformationNeeded(attributes, possibilities, probabilities, splitProbabilities);
+
+            double finalInformationGain = finalExpectedInformation - finalInformationNeeded;
+
+
+            //print out all information gains
+            string finalOutput = "";
+            finalOutput += "Expected information for " + possibilities[0] + " is " + finalExpectedInformation + "\n";
+            finalOutput += "Needed information for " + possibilities[0] + " is " + finalInformationNeeded + "\n";
+            finalOutput += "Information gain for " + possibilities[0] + " is " + finalInformationGain + "\n\n\n";
+
+
+
+            return finalOutput;
         }
 
 
-        public string getEntropy(List<string> attributes, List<string> possibilities, List<double> probabilties)
+
+
+
+        /********************Information Expected Calculations**********************************/
+        public double getInformationExpected(List<double> expectedInformation)
+        {
+            double flippedExpectedInformation = 0;
+            for (int i = 0; i < expectedInformation.Count; i++)
+            {
+                double currentExpectedInformation = expectedInformation[i] * Math.Log2(expectedInformation[i]);
+                flippedExpectedInformation += currentExpectedInformation;
+            }
+            double finalExpectedInformation = flippedExpectedInformation - flippedExpectedInformation - flippedExpectedInformation;
+            return finalExpectedInformation;
+        }
+
+
+        /*****************Information Needed Calculations - much more difficult *********************/
+        public double getInformationNeeded(List<string> attributes, List<string> possibilities, List<double> probabilties, List<List<double>> splitProbs)
         {
             string entropy = "";
-            List<double> entropies = new List<double>();
+            List<double> expected = new List<double>();
+            List<double> needed = new List<double>();
             List<int> classesPerAttribute = new List<int>();
 
             //for each attribute on the list, find how many possible classes there are
             foreach (string possibility in possibilities)
             {
-                //total entropy for one attribute
                 int numberOfClasses = 0;
                 for (int i = 0; i < attributes.Count; i++)
                 {
-                    //forreach attribute on the list calculate the enrtopy
                     if (attributes[i] == possibility)
                     {
                         numberOfClasses++;
@@ -232,36 +324,32 @@ namespace ML_DecisionTreeClassifier
             }
 
 
-
-            //for each attribute on the list, calculate the entropy
+            //for each attribute on the list, calculate the expected information
             for (int x = 0; x < possibilities.Count(); x++)
             {
-                //total entropy for one attribute
-                double attributeEntropy = 0;
+                //expected information of one attribute
+                double expectedInfo = 0;
                 for (int i = 0; i < attributes.Count; i++)
                 {
-                    //forreach attribute on the list calculate the enrtopy
                     if (attributes[i] == possibilities[x])
                     {
-                        double currentProb = probabilties[i];
-                        double valueEntropy = currentProb * Math.Log(currentProb, classesPerAttribute[x]);
-                        attributeEntropy += valueEntropy;
+                        expected.Add(probabilties[i]);
                     }
                 }
 
-                double flipNegativeEntropy = attributeEntropy - attributeEntropy - (attributeEntropy);
-                entropies.Add(flipNegativeEntropy);
             }
 
 
-            //print out all entropies
-            for(int i = 0; i < entropies.Count; i++)
-            { 
-                entropy += "Entropy for " + possibilities[i] + " is " + entropies[i].ToString() + "\n";
-                entropy += "Information Gain for " + possibilities[i] + " is " + (1 - entropies[i]) + "\n\n";
+            //calculate final information needed
+            double finalInformationNeeded = 0;
+            foreach (List<double> probs in splitProbs)
+            {
+                double currentInformationNeeded = expected[0] * getInformationExpected(probs);
+                finalInformationNeeded += currentInformationNeeded;
             }
+            
 
-            return entropy;
+            return finalInformationNeeded;
         }
 
 
@@ -292,7 +380,6 @@ namespace ML_DecisionTreeClassifier
 
 
 
-       
 
 
         public TreeNode Root { get; set; }
