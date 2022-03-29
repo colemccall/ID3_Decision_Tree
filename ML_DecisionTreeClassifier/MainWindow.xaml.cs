@@ -223,8 +223,8 @@ namespace ML_DecisionTreeClassifier
 
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
-                DecisionTree.BuildTree();
-                Test.Text += DecisionTree.testGains();
+                DecisionTree.StartTree();
+                Test.Text += DecisionTree.ViewAll();
 
                 
                 
