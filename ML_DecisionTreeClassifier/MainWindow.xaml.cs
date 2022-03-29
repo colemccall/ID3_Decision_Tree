@@ -165,17 +165,9 @@ namespace ML_DecisionTreeClassifier
                             //Display.Text += currentValue + " ";
                             AttributeNode node = new AttributeNode(currentClass, currentType, currentValue);
                             currentLine.Add(node);
-                        }
+                        }   
 
-                        if (currentType == 'I')
-                        {
-                            int currentValue = int.Parse(parts[i]);
-                            //Display.Text += currentValue + " ";
-                            AttributeNode node = new AttributeNode(currentClass, currentType, currentValue);
-                            currentLine.Add(node);
-                        }
-
-                        if (currentType == 'S')
+                        if (currentType == 'S' || currentType == 'I')
                         {
                             string currentValue = parts[i];
                             //Display.Text += currentValue + " ";
@@ -191,7 +183,7 @@ namespace ML_DecisionTreeClassifier
                         if(node.dataType == 'C')
                             Display.Text += node.continuous + " ";
                         if (node.dataType == 'I')
-                            Display.Text += node.integer + " ";
+                            Display.Text += node.word + " ";
                         if (node.dataType == 'S')
                             Display.Text += node.word + " ";
                     }
@@ -223,8 +215,9 @@ namespace ML_DecisionTreeClassifier
 
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
-                DecisionTree.BuildTree();
-                Test.Text += DecisionTree.testGains();
+                DecisionTree.StartTree();
+                Test.Text += DecisionTree.ViewAll();
+                //Test.Text = DecisionTree.root.Print();
 
                 
                 

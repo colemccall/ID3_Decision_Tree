@@ -14,40 +14,100 @@ namespace ML_DecisionTreeClassifier
             AttributeList = attributeList;
             this.numberOfClasses = numberOfClasses;
         }
+        
+        
 
-        public void BuildTree()
+        public TreeNode RecursiveBuildTree(List<List<AttributeNode>> dataset)
         {
             //find the information gain of all possible nodes available
             List<TreeNode> possibleNodes = new List<TreeNode>();
             for (int i = 0; i < numberOfClasses; i++)
             {
-                possibleNodes.Add(calculateInformationGain(i));
+                possibleNodes.Add(calculateInformationGain(dataset, i));
             }
 
-            //create the root based on whichever node has the most information gain
-            root = getMaxGain(possibleNodes);
+            //create the node that has the most information gain
+            TreeNode current = getMaxGain(possibleNodes);
 
-            //TOTALLY INCORRECT, just creating for testing
-            while(possibleNodes.Count > 0)
-                root.AddNode(getMaxGain(possibleNodes));
-        }
-
-        public string testGains()
-        {
-            string display = ViewTree(root);
-            for (int i = 0; i < root.OtherNodes.Count; i++)
+            //determine how many children this node should have
+            string splitAttribute = current.attribute;
+            List<string> classesWithinAttribute = new List<string>();
+            foreach (List<AttributeNode> dataLine in dataset)
             {
-                display += root.OtherNodes[i].View();
+                for (int i = 0; i < dataLine.Count; i++)
+                {
+                    //check to see if the attribute is the one we are splitting on
+                    if (dataLine[i].classLabel == splitAttribute)
+                    {
+                        if (dataLine[i].dataType == 'S' || dataLine[i].dataType == 'I')
+                        {
+                            if (!classesWithinAttribute.Contains(dataLine[i].word))
+                            {
+                                classesWithinAttribute.Add(dataLine[i].word);
+                            }
+                        }
+                        
+                    }
+                }
             }
-            return display;
+
+            //once we have the number of classes within the attribute that we need, create subset lists
+            List<List<List<AttributeNode>>> subsets = new List<List<List<AttributeNode>>>();
+            foreach (string attributeClass in classesWithinAttribute)
+            {
+                List<List<AttributeNode>> subset = new List<List<AttributeNode>>();
+                foreach (List<AttributeNode> dataLine in dataset)
+                {
+                    for (int i = 0; i < dataLine.Count; i++)
+                    {
+                        if (dataLine[i].dataType == 'S' || dataLine[i].dataType == 'I')
+                        {
+                            if (dataLine[i].word == attributeClass)
+                            {
+                                dataLine[i].split = true;
+                                subset.Add(dataLine);
+                            }
+                        }
+                        
+                    }
+                }
+                subsets.Add(subset);
+            }
+
+            if (subsets.Count > 0)
+            {
+                //once subsets have been created, recursively add each child 
+                for (int i = 0; i < subsets.Count; i++)
+                {
+
+                    TreeNode child = RecursiveBuildTree(subsets[i]);
+                    current.AddChild(child);
+
+                }
+            }
+            else
+            {
+                current.IsLeaf = true;
+            }
+
+
+            //return node
+            return current;
+
         }
+
+        public void StartTree()
+        {
+            root = RecursiveBuildTree(TupleData);
+        }
+
 
 
         
        
 
         //method to view any node and its children on the tree
-        private string ViewTree(TreeNode current)
+        private string ViewTree(TreeNode current, int level)
         {
             //starting with the root, view all nodes on the tree using a recursion
             string display = current.View();
@@ -58,7 +118,15 @@ namespace ML_DecisionTreeClassifier
                 for (int i = 0; i < current.Children.Count; i++)
                 {
                     TreeNode child = current.Children[i];
-                    display += ViewTree(child);
+                    for (int j = 0; j < level; j++)
+                    {
+                        display += "\t";
+                    }
+                    level++;
+
+
+
+                    display += ViewTree(child, level);
                 }
             }
 
@@ -66,7 +134,7 @@ namespace ML_DecisionTreeClassifier
         }
 
         //method to view all nodes on the tree
-        public string ViewAll() { return ViewTree(root); }
+        public string ViewAll() { return ViewTree(root, 0); }
 
 
         private TreeNode getMaxGain(List<TreeNode> treeNodes)
@@ -86,10 +154,10 @@ namespace ML_DecisionTreeClassifier
         }
 
 
-        private TreeNode calculateInformationGain(int attribute)
+        private TreeNode calculateInformationGain(List<List<AttributeNode>> tuples, int attribute)
         {
             //get the data type of this specifc attribute
-            char dataType = TupleData.ElementAt(0).ElementAt(attribute).dataType;
+            char dataType = tuples.ElementAt(0).ElementAt(attribute).dataType;
 
             //initialize double
             double infoGain;
@@ -100,14 +168,14 @@ namespace ML_DecisionTreeClassifier
             int numberOfClassesWithinAttribute = 0;
 
             //Get frequency of each word
-            for (int i = 0; i < TupleData.Count; i++)
+            for (int i = 0; i < tuples.Count; i++)
             {
                 //Get the attribute contents at current position and at the answer
-                AttributeNode currentNode = TupleData.ElementAt(i).ElementAt(attribute);
-                AttributeNode answerNode = TupleData.ElementAt(i).Last();
+                AttributeNode currentNode = tuples.ElementAt(i).ElementAt(attribute);
+                AttributeNode answerNode = tuples.ElementAt(i).Last();
 
                 //if working with words
-                if (currentNode.dataType == 'S')
+                if (currentNode.dataType == 'S' || currentNode.dataType == 'I')
                 {
                     bool containsData = false;
                     foreach (Data data in freqData)
@@ -130,32 +198,6 @@ namespace ML_DecisionTreeClassifier
                         numberOfClassesWithinAttribute++;
                     }
 
-                }
-
-                //if working with integers
-                else if (currentNode.dataType == 'I')
-                {
-                    bool containsData = false;
-                    foreach (Data data in freqData)
-                    {
-                        if (data.doesContain(currentNode.integer))
-                        {
-                            containsData = true;
-                            data.count++;
-                            data.insert(answerNode.word);
-                            total++;
-                            break;
-                        }
-                    }
-
-                    if (!containsData)
-                    {
-                        Data newData = new Data(currentNode.integer, currentNode.classLabel, answerNode.word);
-                        freqData.Add(newData);
-                        total++;
-                        numberOfClassesWithinAttribute++;
-
-                    }
                 }
 
                 //if working with continuous data
@@ -196,7 +238,7 @@ namespace ML_DecisionTreeClassifier
 
             string output = "";
 
-            if (dataType == 'S')
+            if (dataType == 'S' || dataType == 'I')
             {
                 //calculate the probability of each class
                 foreach (Data data in freqData)
@@ -217,45 +259,6 @@ namespace ML_DecisionTreeClassifier
 
 
                     //calculate the probabilities of the answer based on the split on this attribute (Information Needed)
-                    List<double> answerFrequency = new List<double>();
-                    for (int x = 0; x < data.possibleAnswers.Count; x++)
-                        answerFrequency.Add(0);
-
-                    //add counts based on split
-                    for (int x = 0; x < data.answers.Count(); x++)
-                    {
-                        for (int j = 0; j < data.possibleAnswers.Count(); j++)
-                        {
-                            if (data.answers[x] == data.possibleAnswers[j])
-                                answerFrequency[j]++;
-                        }
-                    }
-
-
-                    //divide by the amount of data in the dataset
-                    for (int x = 0; x < answerFrequency.Count; x++)
-                    {
-                        answerFrequency[x] /= currentCount;
-                    }
-
-                    splitProbabilities.Add(answerFrequency);
-                }
-            }
-            else if (dataType == 'I')
-            {
-                foreach (Data data in freqData)
-                {
-                    output += data.integer + " is found " + data.count + "/" + total + " times\n";
-                    double currentProb;
-                    double currentCount = Convert.ToDouble(data.count);
-                    currentProb = currentCount / total;
-
-                    attributes.Add(data.attributeType);
-                    probabilities.Add(currentProb);
-
-                    if (!possibilities.Contains(data.attributeType))
-                        possibilities.Add(data.attributeType);
-
                     List<double> answerFrequency = new List<double>();
                     for (int x = 0; x < data.possibleAnswers.Count; x++)
                         answerFrequency.Add(0);
@@ -301,10 +304,10 @@ namespace ML_DecisionTreeClassifier
             //get the frequency of each answer
             List<double> frequencies = new List<double>();
             List<string> possibleAnswers = new List<string>();
-            for (int a = 0; a < TupleData.Count; a++)
+            for (int a = 0; a < tuples.Count; a++)
             {
                 //Get the attribute contents at the answer
-                AttributeNode answerNode = TupleData.ElementAt(a).Last();
+                AttributeNode answerNode = tuples.ElementAt(a).Last();
                 if (!possibleAnswers.Contains(answerNode.word))
                 {
                     possibleAnswers.Add(answerNode.word);
@@ -312,9 +315,9 @@ namespace ML_DecisionTreeClassifier
                 }
             }
 
-            for (int a = 0; a < TupleData.Count; a++)
+            for (int a = 0; a < tuples.Count; a++)
             {
-                AttributeNode answerNode = TupleData.ElementAt(a).Last();
+                AttributeNode answerNode = tuples.ElementAt(a).Last();
                 for (int j = 0; j < possibleAnswers.Count; j++)
                 {
                     if (answerNode.word == possibleAnswers[j])
@@ -326,6 +329,9 @@ namespace ML_DecisionTreeClassifier
             {
                 frequencies[a] = frequencies[a] / total;
             }
+
+
+
 
             /***************************************Prepare Final Calculations*********************************/
 
@@ -361,6 +367,10 @@ namespace ML_DecisionTreeClassifier
             double finalExpectedInformation = flippedExpectedInformation - flippedExpectedInformation - flippedExpectedInformation;
             return finalExpectedInformation;
         }
+
+
+
+
 
 
         /*****************Information Needed Calculations - much more difficult *********************/
@@ -416,32 +426,10 @@ namespace ML_DecisionTreeClassifier
             return finalInformationNeeded;
         }
 
-
-
-        //take each tuple in Data and check if they all result in the same answer
-        private bool checkClasses()
+        public string PrintTree()
         {
-            //first class is the result of the first training sample
-            string firstClass = TupleData[0].Last().classLabel;
-
-
-            for (int i = 0; i < TupleData.Count; i++)
-            {
-                //currentTuple is one line of training data
-                List<AttributeNode> currentTuple = TupleData[i];
-
-                //currentClass is the result (answer) class
-                string currentClass = currentTuple.Last().classLabel;
-
-                //check to see if the currentClass matches the first class
-                if (currentClass != firstClass)
-                    return false;
-            }
-
-            //otherwise
-            return true;
+            return root.Print();
         }
-
 
 
         private int numberOfClasses { get; set; }

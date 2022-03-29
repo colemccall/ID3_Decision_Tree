@@ -14,12 +14,14 @@ namespace ML_DecisionTreeClassifier
         public string word;
         public int integer;
         public double continuous;
+        public bool split;
 
         public AttributeNode(string classLabel, char dataType, string data)
         {
             this.classLabel = classLabel;
             this.dataType = dataType;
             this.word = data;
+            split = false;
         }
 
         public AttributeNode(string classLabel, char dataType, int data)
@@ -27,6 +29,7 @@ namespace ML_DecisionTreeClassifier
             this.classLabel = classLabel;
             this.dataType = dataType;
             this.integer = data;
+            split=false;
         }
 
         public AttributeNode(string classLabel, char dataType, double data)
@@ -34,12 +37,14 @@ namespace ML_DecisionTreeClassifier
             this.classLabel = classLabel;
             this.dataType = dataType;
             this.continuous = data;
+            split = false;
         }
 
         public AttributeNode()
         {
             classLabel = null;
             word = null;
+            split = false;
            
         }
     }
