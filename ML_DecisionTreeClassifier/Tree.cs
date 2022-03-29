@@ -101,10 +101,24 @@ namespace ML_DecisionTreeClassifier
 
 
 
-        private string PrintTree(TreeNode node)
+        private string Print(TreeNode node)
         {
-            string display = "
+            string display = node.attribute;
+
+            if (node.IsLeaf)
+                display += "\nValue";
+            else
+            {
+                foreach(TreeNode child in node.Children)
+                {
+                    display += Print(child);
+                }
+            }
+
+            return display;
         }
+
+        public string PrintTree() { return Print(root); }
 
 
         //method to view any node and its children on the tree

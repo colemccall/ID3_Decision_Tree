@@ -225,6 +225,7 @@ namespace ML_DecisionTreeClassifier
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
                 DecisionTree.StartTree();
                 Test.Text += DecisionTree.ViewAll();
+                //Test.Text = DecisionTree.PrintTree();
 
                 
                 
