@@ -36,23 +36,22 @@ namespace ML_DecisionTreeClassifier
 
         }
 
-        public string Print()
-        {
-            string finalOutput = attribute;
-            foreach(TreeNode child in Children)
-            {
-                finalOutput += "\n" + child.Print();
-            }
-
-            return finalOutput;
-        }
 
 
 
         //Method for adding a child to the list of children
         public void AddChild(TreeNode child)
         {
-            Children.Add(child);
+            if (Children.Count < 2)
+                Children.Add(child);
+            else
+                Children[1].AddChild(child);
+        }
+
+
+        public void AddNode(TreeNode node)
+        {
+            OtherNodes.Add(node);   
         }
 
 
@@ -60,7 +59,9 @@ namespace ML_DecisionTreeClassifier
         //Children List
         public List<TreeNode> Children = new List<TreeNode>();
 
-        
+        //Fake children list for testing
+        public List<TreeNode> OtherNodes = new List<TreeNode> ();
+
 
         //variable for determining if node is a leaf or had children
         public bool IsLeaf { get; set; }
