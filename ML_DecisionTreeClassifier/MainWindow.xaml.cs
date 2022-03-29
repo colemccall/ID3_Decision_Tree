@@ -115,7 +115,7 @@ namespace ML_DecisionTreeClassifier
                             {
 
                                 dataTypes.Add('S');
-                            }
+                            
                         }
                     }
 
