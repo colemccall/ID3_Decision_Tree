@@ -32,11 +32,91 @@ namespace ML_DecisionTreeClassifier
             TreeNode selectedNode = getMaxGain(possibleNodes);
 
             //select subsets from dataset, excluding the attribute that was just selected
-            string excludeAttriubte = selectedNode.attribute;
+            string excludeAttribute = selectedNode.attribute;
+
+            //list that removes the current attribute (column) from table
+            List<List<AttributeNode>> updatedData = new List<List<AttributeNode>>();
+
+            //list that contains the possible values for each attribute
+            int numberOfValuesInAttribute = 0;
+            List<string> valuesPerAttribute = new List<string>();
+
+            //create list and
+            foreach(List<AttributeNode> line in dataset)
+            {
+                for(int i = 0; i < line.Count; i++)
+                {
+                    if(line[i].classLabel == excludeAttribute)
+                    {
+                        //check to see if the value for this attribute has been added to the list
+                        //this list is used to know how many children to split
+                        if (!valuesPerAttribute.Contains(line[i].word))
+                        {
+                            numberOfValuesInAttribute++;
+                            valuesPerAttribute.Add(line[i].word);
+                        }
+
+                        //modify the table by removing the attribute from the list, as we do not want to calculate information gain for this attribute anymore
+                        line[i].split = true;
+                        //POTENTIAL EDIT - instead of removing the attribute, maybe it could be flagged as checked already
+
+                        
+                    }
+                }
+
+                //add the modified line back to the new table
+                updatedData.Add(line);
+            }
+
+            //build subsets to be used for finding children
+            List<List<List<AttributeNode>>> subsets = new List<List<List<AttributeNode>>>();
+
+            //once the table has been modified, select rows based on possible classes for the attribute
+            foreach (string possibleValue in valuesPerAttribute)
+            {
+                List<List<AttributeNode>> valueSubset = new List<List<AttributeNode>>();
+                foreach (List<AttributeNode> line in updatedData)
+                {
+                    for (int j = 0; j < line.Count; j++)
+                    {
+                        if (line[j].classLabel == excludeAttribute && line[j].word == possibleValue)
+                        {
+                            //FIGURE OUT A WAY TO SEE IF VALUES ALL LEAD TO ONE ANSWER
+                            //IF YES, THEN NO FURTHER WORK IS NEEDED AND THE ANSWER SHOULD BE SET
+                            //IF NO, THEN EXECUTE THE CODE BELOW TO CREATE SUBSETS FOR FINDING CHILDREN
 
 
+                            //create a duplicate line, but remove the age attribute
+                            List<AttributeNode> modifiedLine = line;
+                            modifiedLine.RemoveAt(j);
+
+                            //then add the line to the subset table
+                            valueSubset.Add(modifiedLine);
+                        }
+                    }
+                }
+
+                //add subset to the list of subsets
+                subsets.Add(valueSubset);            
+
+            }
+
+            //once subset has been created, find information gain for each of the remaining attribute through recursion
+            for(int i = 0; i < subsets.Count; i++)
+            {
+                TreeNode child = BuildTreeRecursively(subsets[i]);
+                
+                //once the children have been created, add them to the children list
+                selectedNode.AddChild(child);
+            }
 
 
+            //AGHHHH - what is the end case, how do I actually build the tree
+            //I have subsets that recursively shrink the set, but I do not know when to stop
+            
+
+            //return the new node
+            return selectedNode;
 
         }
 
@@ -389,10 +469,7 @@ namespace ML_DecisionTreeClassifier
 
             return finalInformationNeeded;
         }
-
-
-
-        
+    
 
         private int numberOfClasses { get; set; }
 
@@ -402,25 +479,5 @@ namespace ML_DecisionTreeClassifier
 
         private List<string> AttributeList { get; set; }
 
-
-
-        //(1) create a node N;
-        //(2) if tuples in D are all of the same class, C, then
-        //(3) return N as a leaf node labeled with the class C;
-        //(4) if attribute list is empty then
-        //(5) return N as a leaf node labeled with the majority class in D; // majority voting
-        //(6) apply Attribute selection method(D, attribute list) to find the “best” splitting criterion;
-        //(7) label node N with splitting criterion;
-        //(8) if splitting attribute is discrete-valued and
-        //      multiway splits allowed then // not restricted to binary trees
-        //(9) attribute list ← attribute list − splitting attribute; // remove splitting attribute
-        //(10) for each outcome j of splitting criterion      
-        // partition the tuples and grow subtrees for each partition
-        //(11) let Dj be the set of data tuples in D satisfying outcome j; // a partition      
-        //(12) if Dj is empty then attach a leaf labeled with the majority class in D to node N;
-        //(14) else attach the node returned by Generate decision tree(Dj
-        //, attribute list) to node N;
-        //  endfor
-        //(15) return N;
     }
 }
