@@ -57,10 +57,7 @@ namespace ML_DecisionTreeClassifier
                         }
 
                         //modify the table by removing the attribute from the list, as we do not want to calculate information gain for this attribute anymore
-                        line[i].split = true;
-                        //POTENTIAL EDIT - instead of removing the attribute, maybe it could be flagged as checked already
-
-                        
+                        line[i].split = true;                        
                     }
                 }
 

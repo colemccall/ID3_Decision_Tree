@@ -199,6 +199,10 @@ namespace ML_DecisionTreeClassifier
                 SpeedRead(filePath);
 
 
+                //before building the decision tree, call a function that will calculate a split point for each continuous class of data
+                //then convert the continous data to a string based on the split point
+
+
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
                 DecisionTree.StartTree();
@@ -216,6 +220,28 @@ namespace ML_DecisionTreeClassifier
             }
         }
 
+
+        private List<List<AttributeNode>> TransformContinuousData(List<List<AttributeNode>> inputData)
+        {
+            //create new list that will be returned once data has been read in
+            List<List<AttributeNode>> newList = new List<List<AttributeNode>>();
+
+            //parse through a line to see how many continuous attributes there are
+            List<AttributeNode> firstLine = inputData[0];
+            List<int> continuousIndex = new List<int>();
+            for(int i = 0; i < firstLine.Count(); i++)
+            {
+                //add the index of each continuous attribute
+                if(firstLine[i].dataType == 'C')
+                {
+                    continuousIndex.Add(i);
+                }
+            }
+
+            //FIND A WAY TO EITHER SPLIT OR BIN THE CONTINUOUS DATA
+
+            return newList;
+        }
 
         //This function is for reading the file in one line and displaying the contents to the window
         private void SpeedRead(string filepath)
