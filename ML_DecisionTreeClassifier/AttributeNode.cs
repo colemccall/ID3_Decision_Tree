@@ -42,11 +42,6 @@ namespace ML_DecisionTreeClassifier
 
         }
 
-        public AttributeNode()
-        {
-            classLabel = null;
-            word = null;
-           
-        }
+        
     }
 }

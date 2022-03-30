@@ -102,20 +102,10 @@ namespace ML_DecisionTreeClassifier
                             dataTypes.Add('C');
                         }
 
-                        //otherwise, parse the data as an int
+                        //otherwise, consider it to be nominal
                         else
                         {
-                            try
-                            {
-                                int current = int.Parse(parts[1]);
-
-                                dataTypes.Add('I');
-                            }
-                            catch (Exception ex)
-                            {
-
-                                dataTypes.Add('S');
-                            
+                            dataTypes.Add('S');
                         }
                     }
 
@@ -128,10 +118,8 @@ namespace ML_DecisionTreeClassifier
                 {
                     if (dataTypes[d] == 'C')
                         Display.Text += classes[d] + " is continuous\n";
-                    else if (dataTypes[d] == 'I')
-                        Display.Text += classes[d] + " is integer numeric\n";
                     else if (dataTypes[d] == 'S')
-                        Display.Text += classes[d] + " is words\n";
+                        Display.Text += classes[d] + " is nominal\n";
                 }
 
                 //Create a list that contains all the lines of data
@@ -167,14 +155,6 @@ namespace ML_DecisionTreeClassifier
                             currentLine.Add(node);
                         }
 
-                        if (currentType == 'I')
-                        {
-                            int currentValue = int.Parse(parts[i]);
-                            //Display.Text += currentValue + " ";
-                            AttributeNode node = new AttributeNode(currentClass, currentType, currentValue);
-                            currentLine.Add(node);
-                        }
-
                         if (currentType == 'S')
                         {
                             string currentValue = parts[i];
@@ -190,8 +170,6 @@ namespace ML_DecisionTreeClassifier
                     {
                         if(node.dataType == 'C')
                             Display.Text += node.continuous + " ";
-                        if (node.dataType == 'I')
-                            Display.Text += node.integer + " ";
                         if (node.dataType == 'S')
                             Display.Text += node.word + " ";
                     }

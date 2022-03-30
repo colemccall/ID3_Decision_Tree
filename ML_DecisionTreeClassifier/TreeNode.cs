@@ -76,5 +76,7 @@ namespace ML_DecisionTreeClassifier
         //variables created to store the attribute and the value (class)
         public List<string> values { get; set; }
         public string attribute { get; set; }
+
+        public string finalAnswer { get; set; }
     }
 }
