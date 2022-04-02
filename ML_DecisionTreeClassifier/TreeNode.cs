@@ -15,6 +15,7 @@ namespace ML_DecisionTreeClassifier
             informationGain = gain;
             this.attribute = attribute;
             this.values = values;
+            attributeValue = "none";
         }
 
         public TreeNode()
@@ -22,7 +23,18 @@ namespace ML_DecisionTreeClassifier
             informationExpected = 0;
             informationNeeded = 0;
             informationGain = 0;
+            attributeValue = "none";
         }
+
+        public TreeNode(string attribute, string finalAnswer, string attributeValue)
+        {
+            informationExpected = 0;
+            informationNeeded = 0;
+            informationGain = 0;
+            this.attribute = attribute;
+            this.finalAnswer = finalAnswer;
+            this.attributeValue = attributeValue;
+        } 
 
         //Method for outputting a node
         public string View()
@@ -42,25 +54,16 @@ namespace ML_DecisionTreeClassifier
         //Method for adding a child to the list of children
         public void AddChild(TreeNode child)
         {
-            if (Children.Count < 2)
-                Children.Add(child);
-            else
-                Children[1].AddChild(child);
+            Children.Add(child);
         }
 
 
-        public void AddNode(TreeNode node)
-        {
-            OtherNodes.Add(node);   
-        }
+     
 
 
 
         //Children List
         public List<TreeNode> Children = new List<TreeNode>();
-
-        //Fake children list for testing
-        public List<TreeNode> OtherNodes = new List<TreeNode> ();
 
 
         //variable for determining if node is a leaf or had children
@@ -78,5 +81,7 @@ namespace ML_DecisionTreeClassifier
         public string attribute { get; set; }
 
         public string finalAnswer { get; set; }
+
+        public string attributeValue { get; set; }  
     }
 }

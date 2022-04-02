@@ -15,6 +15,24 @@ namespace ML_DecisionTreeClassifier
             this.numberOfClasses = numberOfClasses;
         }
 
+        private bool areAnswersSame(List<List<AttributeNode>> attributeSubset)
+        {
+            List<string> possibleValues = new List<string>();
+
+            foreach(List<AttributeNode> line in attributeSubset)
+            {
+                string currentAnswer = line.Last().word;
+                if(!possibleValues.Contains(currentAnswer))
+                    possibleValues.Add(currentAnswer);
+            }
+
+
+            if(possibleValues.Count == 1)
+                return true;
+            else
+                return false;
+        }
+
        
         public TreeNode BuildTreeRecursively(List<List<AttributeNode>> dataset)
         {
@@ -41,12 +59,13 @@ namespace ML_DecisionTreeClassifier
             int numberOfValuesInAttribute = 0;
             List<string> valuesPerAttribute = new List<string>();
 
-            //create list and
-            foreach(List<AttributeNode> line in dataset)
+
+            //create list of possible values
+            foreach (List<AttributeNode> line in dataset)
             {
-                for(int i = 0; i < line.Count; i++)
+                for (int i = 0; i < line.Count; i++)
                 {
-                    if(line[i].classLabel == excludeAttribute)
+                    if (line[i].classLabel == excludeAttribute)
                     {
                         //check to see if the value for this attribute has been added to the list
                         //this list is used to know how many children to split
@@ -57,13 +76,14 @@ namespace ML_DecisionTreeClassifier
                         }
 
                         //modify the table by removing the attribute from the list, as we do not want to calculate information gain for this attribute anymore
-                        line[i].split = true;                        
+                        line[i].split = true;
                     }
                 }
 
                 //add the modified line back to the new table
                 updatedData.Add(line);
             }
+            
 
             //build subsets to be used for finding children
             List<List<List<AttributeNode>>> subsets = new List<List<List<AttributeNode>>>();
@@ -72,44 +92,55 @@ namespace ML_DecisionTreeClassifier
             foreach (string possibleValue in valuesPerAttribute)
             {
                 List<List<AttributeNode>> valueSubset = new List<List<AttributeNode>>();
+                List<List<AttributeNode>> answerSubset = new List<List<AttributeNode>>();
                 foreach (List<AttributeNode> line in updatedData)
                 {
                     for (int j = 0; j < line.Count; j++)
                     {
                         if (line[j].classLabel == excludeAttribute && line[j].word == possibleValue)
                         {
-                            //FIGURE OUT A WAY TO SEE IF VALUES ALL LEAD TO ONE ANSWER
-                            //IF YES, THEN NO FURTHER WORK IS NEEDED AND THE ANSWER SHOULD BE SET
-                            //IF NO, THEN EXECUTE THE CODE BELOW TO CREATE SUBSETS FOR FINDING CHILDREN
-
-
                             //create a duplicate line, but remove the age attribute
                             List<AttributeNode> modifiedLine = line;
                             modifiedLine.RemoveAt(j);
 
-                            //then add the line to the subset table
+                            //then add the new line to the subset table, for finding information gain on future attributes
                             valueSubset.Add(modifiedLine);
+
+                            //also add the original line to see if all the values are the same
+                            answerSubset.Add(line);
                         }
                     }
                 }
 
-                //add subset to the list of subsets
-                subsets.Add(valueSubset);            
+                //before adding the subset we just made to the list of subsets for informatio gain processing,
+                //check to see if the subset all has the same answer
+                if (areAnswersSame(answerSubset))
+                {
+                    TreeNode child = new TreeNode(excludeAttribute, answerSubset[0].Last().word, possibleValue);
+                    selectedNode.AddChild(child);
+                }
+                else
+                {
+                    selectedNode.attributeValue = "needs more";
+                    subsets.Add(valueSubset);
+                }
 
             }
 
-            //once subset has been created, find information gain for each of the remaining attribute through recursion
-            for(int i = 0; i < subsets.Count; i++)
+            //once subset has been created, check to see if all the attributes in the subset result in the same answer
+            //if every row in the subset results in the same answer, then you are done
+            //otherwise, find information gain for each of the remaining attribute through recursion
+            for (int i = 0; i < subsets.Count; i++)
             {
+                //otherwise create a child and add it to the list
                 TreeNode child = BuildTreeRecursively(subsets[i]);
-                
+
                 //once the children have been created, add them to the children list
                 selectedNode.AddChild(child);
             }
 
 
-            //AGHHHH - what is the end case, how do I actually build the tree
-            //I have subsets that recursively shrink the set, but I do not know when to stop
+            
             
 
             //return the new node
@@ -127,15 +158,15 @@ namespace ML_DecisionTreeClassifier
 
         private string Print(TreeNode node, int level)
         {
-            string display = node.attribute;
+            string display = "\n";
+            if (node.attributeValue != "none" && node.attributeValue != "needs more")
+                display += node.attribute + "=" + node.attributeValue;
+            
 
-            if (node.IsLeaf)
+            if (node.Children.Count == 0)
             {
-                display += "\n";
-                for (int i = 0; i < level; i++)
-                    display += "\t";
-                
-                display += node.finalAnswer;
+                display += "\n\t";
+                display += "ans:" + node.finalAnswer;
             }
             else
             {

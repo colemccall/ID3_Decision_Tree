@@ -203,11 +203,12 @@ namespace ML_DecisionTreeClassifier
                 //then convert the continous data to a string based on the split point
 
 
+
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
                 DecisionTree.StartTree();
                 Test.Text += DecisionTree.ViewAll();
-                //Test.Text = DecisionTree.PrintTree();
+                Test.Text = DecisionTree.PrintTree();
 
                 
                 
