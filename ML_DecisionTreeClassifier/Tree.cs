@@ -87,6 +87,7 @@ namespace ML_DecisionTreeClassifier
 
             //build subsets to be used for finding children
             List<List<List<AttributeNode>>> subsets = new List<List<List<AttributeNode>>>();
+            List<string> subsetValues = new List<string>();
 
             //once the table has been modified, select rows based on possible classes for the attribute
             foreach (string possibleValue in valuesPerAttribute)
@@ -123,6 +124,7 @@ namespace ML_DecisionTreeClassifier
                 {
                     selectedNode.attributeValue = "needs more";
                     subsets.Add(valueSubset);
+                    subsetValues.Add(possibleValue);
                 }
 
             }
@@ -134,6 +136,8 @@ namespace ML_DecisionTreeClassifier
             {
                 //otherwise create a child and add it to the list
                 TreeNode child = BuildTreeRecursively(subsets[i]);
+                child.attribute = excludeAttribute;
+                child.attributeValue = subsetValues[i];
 
                 //once the children have been created, add them to the children list
                 selectedNode.AddChild(child);
@@ -158,10 +162,14 @@ namespace ML_DecisionTreeClassifier
 
         private string Print(TreeNode node, int level)
         {
-            string display = "\n";
+            string display = "";
+
+
+
             if (node.attributeValue != "none" && node.attributeValue != "needs more")
-                display += node.attribute + "=" + node.attributeValue;
-            
+            {
+                display += node.attribute + "=" + node.attributeValue + ":";
+            }
 
             if (node.Children.Count == 0)
             {
@@ -172,8 +180,10 @@ namespace ML_DecisionTreeClassifier
             {
                 foreach (TreeNode child in node.Children)
                 {
-                    level++;
-                    display += Print(child, level);
+                    //display +=  "\n" + node.attribute;
+
+                    display += "\n";
+                    display += Print(child, level++);
                 }
             }
 
