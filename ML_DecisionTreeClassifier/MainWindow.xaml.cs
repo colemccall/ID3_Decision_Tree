@@ -29,12 +29,8 @@ namespace ML_DecisionTreeClassifier
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Open file based on path set by user
-            string filePath = FilePathText.Text;
-            ReadFile(filePath);
-        }
+       
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -202,7 +198,33 @@ namespace ML_DecisionTreeClassifier
 
                 //before building the decision tree, call a function that will calculate a split point for each continuous class of data
                 //then convert the continous data to a string based on the split point
+                List<List<AttributeNode>> finalTuples = new List<List<AttributeNode>>();
 
+                //check the first line in the data matrix to see how many continuous attributes there are
+                List<int> continuousAttributeIndexes = new List<int>();
+                for(int i = 0; i < tuples[0].Count - 1; i++)
+                {
+                    if(tuples[0].ElementAt(i).dataType == 'C')
+                    {
+                        continuousAttributeIndexes.Add(i);
+                    }
+                }
+
+                //if there are continunous data in the matrix, we need to reclassify it by finding split points
+                if (continuousAttributeIndexes.Count > 0)
+                {
+                    //for each continous attribute, create a list of all data, but only the attribute nodes we care about
+                    foreach(int index in continuousAttributeIndexes)
+                    {
+                        List<AttributeNode> currentContData = new List<AttributeNode>();
+                        foreach(List<AttributeNode> tuple in tuples)
+                        {
+                            currentContData.Add(tuple.ElementAt(index));
+                        }
+
+                        //once we have a list of every attribute value, then we need to find the best split point
+                    }
+                }
 
 
                 //build decision tree

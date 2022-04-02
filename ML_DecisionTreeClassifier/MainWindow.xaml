@@ -15,10 +15,7 @@
         <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="332,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="234"/>
         <Rectangle x:Name="SelectCustomBackground" HorizontalAlignment="Left" Height="698" Stroke="Black" VerticalAlignment="Center" Width="438" Grid.ColumnSpan="3" Margin="11,0,0,0"/>
         <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="975,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
-        <TextBox x:Name="FilePathText" HorizontalAlignment="Left" Height="51" Margin="16,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" TextChanged="TextBox_TextChanged" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Label Content="Please enter the file path you would like to open" HorizontalAlignment="Left" Margin="16,115,0,0" VerticalAlignment="Top" Width="335" Grid.ColumnSpan="2" Height="28" Grid.Column="1"/>
-        <Button x:Name="OpenButton" Content="Open" HorizontalAlignment="Left" Margin="251,141,0,0" VerticalAlignment="Top" Height="51" Width="61" Click="Button_Click" Grid.Column="2" RenderTransformOrigin="-0.658,0.491"/>
-        <TextBlock x:Name="Display" HorizontalAlignment="Left" Margin="16,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="494" Width="395" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBlock x:Name="Display" HorizontalAlignment="Left" Margin="16,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="455" Width="395" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="a.in&#xD;&#xA;" HorizontalAlignment="Left" Margin="332,24,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
         <Button x:Name="RunA" Content="Run" HorizontalAlignment="Left" Margin="472,24,0,0" VerticalAlignment="Top" Height="28" Width="82" Click="RunA_Click" Grid.Column="2"/>
         <Label Content="circuit.in" HorizontalAlignment="Left" Margin="332,57,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
@@ -55,7 +52,7 @@
         <Label Content="xorc.in" HorizontalAlignment="Left" Margin="332,552,0,0" VerticalAlignment="Top" Height="28" Width="100" Grid.Column="2"/>
         <Label Grid.Column="1" Content="Select the file which you would like to read in &gt;&gt;" HorizontalAlignment="Left" Margin="16,33,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="335" Height="30"/>
         <Button x:Name="SelectFile" Grid.Column="2" Content="Select" HorizontalAlignment="Left" Margin="194,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.025,-0.198" Height="22" Width="118" Click="SelectFile_Click"/>
-        <Label Grid.Column="1" Content="Display Text" HorizontalAlignment="Left" Height="33" Margin="16,192,0,0" VerticalAlignment="Top" Width="80"/>
+        <Label Grid.Column="1" Content="Display Text" HorizontalAlignment="Left" Height="33" Margin="16,223,0,0" VerticalAlignment="Top" Width="80"/>
         <TextBox x:Name="FileSelected" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="53" Margin="16,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="395" TextChanged="FileSelected_TextChanged"/>
         <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="571,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
         <Label Grid.Column="2" Content="Original Input File" HorizontalAlignment="Left" Margin="579,33,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
@@ -68,6 +65,8 @@
         <TextBox x:Name="OutputFileName" Grid.Column="2" HorizontalAlignment="Left" Margin="1104,672,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Height="27" FontSize="14"/>
         <Label Grid.Column="2" Content="Output File Name:" HorizontalAlignment="Left" Margin="989,672,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,1.196" Width="110"/>
         <Button x:Name="PrintButton" Grid.Column="2" Content="Print" HorizontalAlignment="Left" Margin="1282,672,0,0" VerticalAlignment="Top" Height="27" Width="47" Click="PrintButton_Click"/>
+        <TextBlock x:Name="SelectInstructions" Grid.Column="1" HorizontalAlignment="Left" Margin="18,143,0,0" TextWrapping="Wrap" Text="You can also select a file by selecting an option from the dropdown" VerticalAlignment="Top" Width="391" Height="27" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="FileOptions" Grid.Column="1" HorizontalAlignment="Left" Margin="16,170,0,0" VerticalAlignment="Top" Width="395" Height="28" Grid.ColumnSpan="2"/>
 
 
 

@@ -1,0 +1,10 @@
+
+A=0:
+	ans:0
+A=2:
+	ans:2
+A=1:
+	B=dog:
+		ans:1
+	B=cat:
+		ans:0
