@@ -12,7 +12,7 @@ Insert purpose here
 
 
 2. Using the recently cloned ConnectedComponentApp directory, navigate to the executable location
-  - `cd DecisionTree\ML_DecisionTreeClassifer\bin\Debug\net6.0-windows`
+  - `cd DecisionTree\ML_DecisionTreeClassifier\bin\Debug\net6.0-windows`
 
 
 3. Launch the GUI
