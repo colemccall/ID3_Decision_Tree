@@ -8,7 +8,7 @@ Insert purpose here
 
 # How to Run the Program
 1. Clone the decision tree repo to your pc
-  - 'git clone https://github.com/colemccall/DecisionTreeCSharp.git DecisionTree'
+  - `git clone https://github.com/colemccall/DecisionTreeCSharp.git DecisionTree`
 
 
 2. Using the recently cloned ConnectedComponentApp directory, navigate to the executable location
