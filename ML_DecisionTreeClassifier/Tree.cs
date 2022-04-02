@@ -174,16 +174,21 @@ namespace ML_DecisionTreeClassifier
             if (node.Children.Count == 0)
             {
                 display += "\n\t";
+                for (int i = 1; i < level; i++)
+                    display += "\t";
                 display += "ans:" + node.finalAnswer;
             }
             else
             {
+                level++;
                 foreach (TreeNode child in node.Children)
                 {
                     //display +=  "\n" + node.attribute;
 
                     display += "\n";
-                    display += Print(child, level++);
+                    for (int i = 1; i < level; i++)
+                        display += "\t";
+                    display += Print(child, level);
                 }
             }
 

@@ -21,7 +21,8 @@ namespace ML_DecisionTreeClassifier
 {
     public partial class MainWindow : Window
     {
-        private string filedir = "C:\\Users\\colem\\Desktop\\Junior\\Spring_2022\\Machine Learning\\Code\\ML_DecisionTreeClassifier\\ML_DecisionTreeClassifier";
+        private string filedir = Directory.GetCurrentDirectory() + "\\.." + "\\.." + "\\..";
+        private string decisionTreeOutput;
 
         public MainWindow()
         {
@@ -207,12 +208,9 @@ namespace ML_DecisionTreeClassifier
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
                 DecisionTree.StartTree();
-                Test.Text += DecisionTree.ViewAll();
-                Test.Text = DecisionTree.PrintTree();
-
-                
-                
-
+                //Test.Text += DecisionTree.ViewAll();
+                decisionTreeOutput = DecisionTree.PrintTree();
+                Test.Text = decisionTreeOutput;
 
             }
             catch (Exception ex)
@@ -374,6 +372,31 @@ namespace ML_DecisionTreeClassifier
         private void FileSelected_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get the name of the file from the text box
+                string outputFileName = filedir + "\\outputs\\" + OutputFileName.Text;
+
+                //create a file stream and open a file to start writing
+                StreamWriter outputStreamWriter = new StreamWriter(outputFileName);
+
+
+                //try to write the output from tree to a file
+                outputStreamWriter.Write(decisionTreeOutput);
+                MessageBox.Show(OutputFileName.Text + " successful");
+                outputStreamWriter.Close();
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failure - file either could not be opened or could not print contents to file");
+            }
         }
     }
 }

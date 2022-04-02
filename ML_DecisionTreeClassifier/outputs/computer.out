@@ -1,0 +1,13 @@
+
+age=31-40:
+	ans:yes
+age=<=30:
+	student=no:
+		ans:no
+	student=yes:
+		ans:yes
+age=>40:
+	credit=fair:
+		ans:yes
+	credit=excellent:
+		ans:no
