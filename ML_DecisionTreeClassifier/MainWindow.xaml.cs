@@ -192,6 +192,10 @@ namespace ML_DecisionTreeClassifier
 
                 //quick read for easy comparision
                 SpeedRead(filePath);
+                string outfile = filePath.Substring(0, filePath.Length - 3) + ".out";
+                try { SpeedOut(outfile); }
+                catch (Exception ex) { OutfileBox.Text = "no .out file for this dataset"; }
+                
 
 
                 //before building the decision tree, call a function that will calculate a split point for each continuous class of data
@@ -222,13 +226,10 @@ namespace ML_DecisionTreeClassifier
                 }
 
 
-
-
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
                 DecisionTree.removeAllContinuous(continuousAttributeIndexes, allPossibleSplitPoints);
                 DecisionTree.StartTree();
-                //Test.Text += DecisionTree.ViewAll();
                 decisionTreeOutput = DecisionTree.PrintTree();
                 Test.Text = decisionTreeOutput;
 
@@ -250,6 +251,14 @@ namespace ML_DecisionTreeClassifier
             StreamReader stream = new StreamReader(filepath);
             var content = stream.ReadToEnd();
             FileInput.Text = content;
+            stream.Close();
+        }
+
+        private void SpeedOut(string filepath)
+        {
+            StreamReader stream = new StreamReader(filepath);
+            var content = stream.ReadToEnd();
+            OutfileBox.Text = content;
             stream.Close();
         }
 

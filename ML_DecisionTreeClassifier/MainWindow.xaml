@@ -5,68 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ML_DecisionTreeClassifier"
         mc:Ignorable="d"
-        Title="MainWindow" Height="758" Width="1530">
-    <Grid Margin="0,0,0,-6">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="33*"/>
-            <ColumnDefinition Width="469*"/>
-        </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="332,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="234"/>
-        <Rectangle x:Name="SelectCustomBackground" HorizontalAlignment="Left" Height="698" Stroke="Black" VerticalAlignment="Center" Width="438" Grid.ColumnSpan="3" Margin="11,0,0,0"/>
-        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="975,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
-        <TextBlock x:Name="Display" HorizontalAlignment="Left" Margin="16,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="455" Width="395" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Label Content="a.in&#xD;&#xA;" HorizontalAlignment="Left" Margin="332,24,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Button x:Name="RunA" Content="Run" HorizontalAlignment="Left" Margin="472,24,0,0" VerticalAlignment="Top" Height="28" Width="82" Click="RunA_Click" Grid.Column="2"/>
-        <Label Content="circuit.in" HorizontalAlignment="Left" Margin="332,57,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="continue.in" HorizontalAlignment="Left" Margin="332,90,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="continue0.in" HorizontalAlignment="Left" Margin="332,123,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="continue2.in" HorizontalAlignment="Left" Margin="332,156,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="golf.in" HorizontalAlignment="Left" Margin="332,189,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="golfc.in" HorizontalAlignment="Left" Margin="332,222,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="nota.in" HorizontalAlignment="Left" Margin="332,255,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Button x:Name="CircuitButton" Content="Run" HorizontalAlignment="Left" Margin="472,57,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="CircuitButton_Click" Grid.Column="2"/>
-        <Button x:Name="ContinueButton" Content="Run" HorizontalAlignment="Left" Margin="472,90,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="ContinueButton_Click" Grid.Column="2"/>
-        <Button x:Name="Continue0Button" Content="Run" HorizontalAlignment="Left" Margin="472,123,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Continue0Button_Click" Grid.Column="2"/>
-        <Button x:Name="Continue2Button" Content="Run" HorizontalAlignment="Left" Margin="472,156,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Continue2Button_Click" Grid.Column="2"/>
-        <Button x:Name="GolfButton" Content="Run" HorizontalAlignment="Left" Margin="472,189,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="GolfButton_Click" Grid.Column="2"/>
-        <Button x:Name="GolfcButton" Content="Run" HorizontalAlignment="Left" Margin="472,222,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="GolfcButton_Click" Grid.Column="2"/>
-        <Button x:Name="NotaButton" Content="Run" HorizontalAlignment="Left" Margin="472,255,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="NotaButton_Click" Grid.Column="2"/>
-        <Label Content="or.in" HorizontalAlignment="Left" Margin="332,289,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="parity3.in" HorizontalAlignment="Left" Margin="332,322,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="restaurantDecisionTree" HorizontalAlignment="Left" Margin="332,355,0,0" VerticalAlignment="Top" Height="28" Width="147" Grid.Column="2"/>
-        <Label Content="simple.in" HorizontalAlignment="Left" Margin="332,387,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="someParity3" HorizontalAlignment="Left" Margin="332,420,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="split.in" HorizontalAlignment="Left" Margin="332,453,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Label Content="toolittle.in" HorizontalAlignment="Left" Margin="332,487,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Button x:Name="OrButton" Content="Run" HorizontalAlignment="Left" Margin="472,289,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="OrButton_Click" RenderTransformOrigin="-0.037,0.501" Grid.Column="2"/>
-        <Button x:Name="Parity3Button" Content="Run" HorizontalAlignment="Left" Margin="472,321,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Parity3Button_Click" Grid.Column="2"/>
-        <Button x:Name="RestaurantButton" Content="Run" HorizontalAlignment="Left" Margin="472,355,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="RestaurantButton_Click" Grid.Column="2"/>
-        <Button x:Name="SimpleButton" Content="Run" HorizontalAlignment="Left" Margin="472,387,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="SimpleButton_Click" Grid.Column="2"/>
-        <Button x:Name="SomeParity3" Content="Run" HorizontalAlignment="Left" Margin="472,420,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="SomeParity3_Click" Grid.Column="2"/>
-        <Button x:Name="Split" Content="Run" HorizontalAlignment="Left" Margin="472,453,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Split_Click" Grid.Column="2"/>
-        <Button x:Name="TooLittleButton" Content="Run" HorizontalAlignment="Left" Margin="472,486,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="TooLittleButton_Click" Grid.Column="2"/>
-        <Label Content="xor.in" HorizontalAlignment="Left" Margin="332,519,0,0" VerticalAlignment="Top" Height="28" Width="79" Grid.Column="2"/>
-        <Button x:Name="XorButton" Content="Run" HorizontalAlignment="Left" Margin="472,519,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="XorButton_Click" Grid.Column="2"/>
-        <Button x:Name="XorcButton" Content="Run" HorizontalAlignment="Left" Margin="472,552,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="XorcButton_Click" Grid.Column="2"/>
-        <Label Content="xorc.in" HorizontalAlignment="Left" Margin="332,552,0,0" VerticalAlignment="Top" Height="28" Width="100" Grid.Column="2"/>
+        Title="MainWindow" Height="851" Width="1530">
+    <Grid Margin="0,0,0,0">
+
+        <Rectangle HorizontalAlignment="Left" Height="792" Margin="445,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="234"/>
+        <Rectangle x:Name="SelectCustomBackground" HorizontalAlignment="Left" Height="792" Stroke="Black" VerticalAlignment="Center" Width="415" Margin="11,0,0,0"/>
+        <Rectangle HorizontalAlignment="Left" Height="792" Margin="1105,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
+        <TextBlock x:Name="Display" HorizontalAlignment="Left" Margin="17,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="562" Width="395" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.144"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.497"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Label Content="a.in&#xD;&#xA;" HorizontalAlignment="Left" Margin="445,34,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Button x:Name="RunA" Content="Run" HorizontalAlignment="Left" Margin="585,34,0,0" VerticalAlignment="Top" Height="28" Width="82" Click="RunA_Click"/>
+        <Label Content="circuit.in" HorizontalAlignment="Left" Margin="445,67,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="continue.in" HorizontalAlignment="Left" Margin="445,100,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="continue0.in" HorizontalAlignment="Left" Margin="445,133,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="continue2.in" HorizontalAlignment="Left" Margin="445,166,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="golf.in" HorizontalAlignment="Left" Margin="445,199,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="golfc.in" HorizontalAlignment="Left" Margin="445,232,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="nota.in" HorizontalAlignment="Left" Margin="445,265,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Button x:Name="CircuitButton" Content="Run" HorizontalAlignment="Left" Margin="585,67,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="CircuitButton_Click"/>
+        <Button x:Name="ContinueButton" Content="Run" HorizontalAlignment="Left" Margin="585,100,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="ContinueButton_Click"/>
+        <Button x:Name="Continue0Button" Content="Run" HorizontalAlignment="Left" Margin="585,133,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Continue0Button_Click"/>
+        <Button x:Name="Continue2Button" Content="Run" HorizontalAlignment="Left" Margin="585,166,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Continue2Button_Click"/>
+        <Button x:Name="GolfButton" Content="Run" HorizontalAlignment="Left" Margin="585,199,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="GolfButton_Click"/>
+        <Button x:Name="GolfcButton" Content="Run" HorizontalAlignment="Left" Margin="585,232,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="GolfcButton_Click"/>
+        <Button x:Name="NotaButton" Content="Run" HorizontalAlignment="Left" Margin="585,265,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="NotaButton_Click"/>
+        <Label Content="or.in" HorizontalAlignment="Left" Margin="445,299,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="parity3.in" HorizontalAlignment="Left" Margin="445,332,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="restaurantDecisionTree" HorizontalAlignment="Left" Margin="445,365,0,0" VerticalAlignment="Top" Height="28" Width="147"/>
+        <Label Content="simple.in" HorizontalAlignment="Left" Margin="445,397,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="someParity3" HorizontalAlignment="Left" Margin="445,430,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="split.in" HorizontalAlignment="Left" Margin="445,463,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Label Content="toolittle.in" HorizontalAlignment="Left" Margin="445,497,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Button x:Name="OrButton" Content="Run" HorizontalAlignment="Left" Margin="585,299,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="OrButton_Click" RenderTransformOrigin="-0.037,0.501"/>
+        <Button x:Name="Parity3Button" Content="Run" HorizontalAlignment="Left" Margin="585,331,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Parity3Button_Click"/>
+        <Button x:Name="RestaurantButton" Content="Run" HorizontalAlignment="Left" Margin="585,365,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="RestaurantButton_Click"/>
+        <Button x:Name="SimpleButton" Content="Run" HorizontalAlignment="Left" Margin="585,397,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="SimpleButton_Click"/>
+        <Button x:Name="SomeParity3" Content="Run" HorizontalAlignment="Left" Margin="585,430,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="SomeParity3_Click"/>
+        <Button x:Name="Split" Content="Run" HorizontalAlignment="Left" Margin="585,463,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="Split_Click"/>
+        <Button x:Name="TooLittleButton" Content="Run" HorizontalAlignment="Left" Margin="585,496,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="TooLittleButton_Click"/>
+        <Label Content="xor.in" HorizontalAlignment="Left" Margin="445,529,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
+        <Button x:Name="XorButton" Content="Run" HorizontalAlignment="Left" Margin="585,529,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="XorButton_Click"/>
+        <Button x:Name="XorcButton" Content="Run" HorizontalAlignment="Left" Margin="585,562,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="XorcButton_Click"/>
+        <Label Content="xorc.in" HorizontalAlignment="Left" Margin="445,562,0,0" VerticalAlignment="Top" Height="28" Width="100"/>
         <Label Grid.Column="1" Content="Select the file which you would like to read in &gt;&gt;" HorizontalAlignment="Left" Margin="16,33,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="335" Height="30"/>
-        <Button x:Name="SelectFile" Grid.Column="2" Content="Select" HorizontalAlignment="Left" Margin="194,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.025,-0.198" Height="22" Width="118" Click="SelectFile_Click"/>
+        <Button x:Name="SelectFile" Content="Select" HorizontalAlignment="Left" Margin="293,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.025,-0.198" Height="22" Width="118" Click="SelectFile_Click"/>
         <Label Grid.Column="1" Content="Display Text" HorizontalAlignment="Left" Height="33" Margin="16,223,0,0" VerticalAlignment="Top" Width="80"/>
         <TextBox x:Name="FileSelected" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="53" Margin="16,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="395" TextChanged="FileSelected_TextChanged"/>
-        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="698" Margin="571,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
-        <Label Grid.Column="2" Content="Original Input File" HorizontalAlignment="Left" Margin="579,33,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
-        <TextBox x:Name="FileInput" Grid.Column="2" HorizontalAlignment="Left" Margin="579,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="639"/>
-        <TextBox x:Name="Test" Grid.Column="2" HorizontalAlignment="Left" Height="537" Margin="989,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="354"/>
-        <Button x:Name="TestTreeButton" Content="Run" HorizontalAlignment="Left" Margin="472,585,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="testTree_Click" Grid.Column="2"/>
-        <Label Content="testTree.in" HorizontalAlignment="Left" Margin="332,585,0,0" VerticalAlignment="Top" Height="28" Width="100" Grid.Column="2"/>
-        <Label Grid.Column="2" Content="Decision Tree" HorizontalAlignment="Left" Margin="989,33,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="989,613,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="45" Width="354" FontSize="14" Text="If you would like to print the decision tree to a file, please enter the name of the file, then press PRINT"/>
-        <TextBox x:Name="OutputFileName" Grid.Column="2" HorizontalAlignment="Left" Margin="1104,672,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Height="27" FontSize="14"/>
-        <Label Grid.Column="2" Content="Output File Name:" HorizontalAlignment="Left" Margin="989,672,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,1.196" Width="110"/>
-        <Button x:Name="PrintButton" Grid.Column="2" Content="Print" HorizontalAlignment="Left" Margin="1282,672,0,0" VerticalAlignment="Top" Height="27" Width="47" Click="PrintButton_Click"/>
+        <Rectangle HorizontalAlignment="Left" Height="792" Margin="701,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
+        <Label Content="Original Input File" HorizontalAlignment="Left" Margin="709,30,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
+        <TextBox x:Name="FileInput" HorizontalAlignment="Left" Margin="709,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="398"/>
+        <TextBox x:Name="Test" HorizontalAlignment="Left" Height="625" Margin="1119,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="354"/>
+        <Button x:Name="TestTreeButton" Content="Run" HorizontalAlignment="Left" Margin="585,595,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="testTree_Click"/>
+        <Label Content="testTree.in" HorizontalAlignment="Left" Margin="445,595,0,0" VerticalAlignment="Top" Height="28" Width="100"/>
+        <Label Content="Decision Tree" HorizontalAlignment="Left" Margin="1119,29,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1123,705,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="45" Width="354" FontSize="14" Text="If you would like to print the decision tree to a file, please enter the name of the file, then press PRINT"/>
+        <TextBox x:Name="OutputFileName" HorizontalAlignment="Left" Margin="1238,764,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Height="27" FontSize="14"/>
+        <Label Content="Output File Name:" HorizontalAlignment="Left" Margin="1123,764,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,1.196" Width="110"/>
+        <Button x:Name="PrintButton" Content="Print" HorizontalAlignment="Left" Margin="1416,764,0,0" VerticalAlignment="Top" Height="27" Width="47" Click="PrintButton_Click"/>
         <TextBlock x:Name="SelectInstructions" Grid.Column="1" HorizontalAlignment="Left" Margin="18,143,0,0" TextWrapping="Wrap" Text="You can also select a file by selecting an option from the dropdown" VerticalAlignment="Top" Width="391" Height="27" Grid.ColumnSpan="2"/>
         <ComboBox x:Name="FileOptions" Grid.Column="1" HorizontalAlignment="Left" Margin="16,170,0,0" VerticalAlignment="Top" Width="395" Height="28" Grid.ColumnSpan="2"/>
+        <Label Content="Original Output File" HorizontalAlignment="Left" Margin="709,464,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
+        <TextBox x:Name="OutfileBox" HorizontalAlignment="Left" Margin="709,496,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="295"/>
 
 
 
