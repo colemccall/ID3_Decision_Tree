@@ -15,6 +15,104 @@ namespace ML_DecisionTreeClassifier
             this.numberOfClasses = numberOfClasses;
         }
 
+        //reclassify a specific attribute from continuous to nominal
+        private List<List<AttributeNode>> removeContinuous(List<List<AttributeNode>> currentDataMatrix, double splitPoint, int attributeIndex)
+        {
+            //create a new empty data matrix
+            List<List<AttributeNode>> newMatrix = new List<List<AttributeNode>>();
+
+            //for every single node where the attribute is contininous, reclassify based on split type
+            List<List<AttributeNode>> currentMatrix = new List<List<AttributeNode>>(currentDataMatrix);
+            foreach (List<AttributeNode> line in currentDataMatrix)
+            {
+                //we want to keep the actual line in tact, so lets create a copy
+                List<AttributeNode> currentLine = new List<AttributeNode>();
+                foreach(AttributeNode attribute in line)
+                {
+                    if (attribute.converted == false)
+                        currentLine.Add(new AttributeNode(attribute.classLabel, attribute.dataType, attribute.continuous));
+                    else
+                        currentLine.Add(new AttributeNode(attribute.classLabel, attribute.dataType, attribute.word));
+                }
+
+
+                //get the current value and check if it is less than or greater than the split point
+                double currentValue = currentLine[attributeIndex].continuous;
+
+                if (currentValue > splitPoint)
+                {
+                    string newValue = ">" + splitPoint.ToString();
+                    currentLine[attributeIndex].dataType = 'S';
+                    currentLine[attributeIndex].word = newValue;
+                    currentLine[attributeIndex].converted = true;
+                }
+                else
+                {
+                    string newValue = "<=" + splitPoint.ToString();
+                    currentLine[attributeIndex].dataType = 'S';
+                    currentLine[attributeIndex].word = newValue;
+                    currentLine[attributeIndex].converted = true;
+                }
+
+                newMatrix.Add(currentLine.ToList());
+
+            }
+
+            return newMatrix;
+
+        }
+
+
+        //reclassify all continuous attributes based on a list that contains which indexes are continiuous
+        public void removeAllContinuous(List<int> continuousIndexes, List<List<double>> possibleSplitPoints)
+        {
+            //start out with the base data matrix
+            List<List<AttributeNode>> updatedMatrix = new List<List<AttributeNode>>(TupleData);
+            
+
+            
+            for(int i = 0; i < continuousIndexes.Count; i++)
+            {
+                //for each continuous attribute, create a list of the new possible matrixes
+                List<List<List<AttributeNode>>> possibleNewMatrixes = new List<List<List<AttributeNode>>>();
+
+                //each possible matrix will be created based on all the possible split points
+                foreach (double currentSplitPoint in possibleSplitPoints[i])
+                {
+                    //AGHHHHHHHHHHHHHHHHHh - needs to create a new matrix, not just keep updating the current one
+                    List<List<AttributeNode>> currentMatrix = new List<List<AttributeNode>>(updatedMatrix);
+                    possibleNewMatrixes.Add(removeContinuous(currentMatrix.ToList(), currentSplitPoint, continuousIndexes[i]));
+                }
+
+                //once we have all of our possible new matrices, we need to calculate information gain for these matrices
+                List<TreeNode> possibleNodes = new List<TreeNode>();    
+
+                foreach (List<List<AttributeNode>> possibleMatrix in possibleNewMatrixes)
+                {
+                    //get the information gain of each possible matrix
+                    possibleNodes.Add(calculateInformationGain(possibleMatrix, continuousIndexes[i]));
+                }
+
+                //once we have all the possible information gains of this attribute, we need to select the best
+                double bestInformationGain = double.MinValue;
+                int bestInformationGainIndex = 0;
+                for (int j = 0; j < possibleNodes.Count; j++)
+                {
+                    if(possibleNodes[j].informationGain > bestInformationGain)
+                    {
+                        bestInformationGain = possibleNodes[j].informationGain;
+                        bestInformationGainIndex = j;
+                    }
+                }
+
+                //once we know the best information gain, we can set our updated matrix
+                updatedMatrix = possibleNewMatrixes[bestInformationGainIndex];
+
+            }
+
+            TupleData = updatedMatrix;
+        }
+
         private bool areAnswersSame(List<List<AttributeNode>> attributeSubset)
         {
             List<string> possibleValues = new List<string>();

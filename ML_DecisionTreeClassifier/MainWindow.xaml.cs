@@ -29,8 +29,6 @@ namespace ML_DecisionTreeClassifier
             InitializeComponent();
         }
 
-       
-
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -201,34 +199,34 @@ namespace ML_DecisionTreeClassifier
                 List<List<AttributeNode>> finalTuples = new List<List<AttributeNode>>();
 
                 //check the first line in the data matrix to see how many continuous attributes there are
-                List<int> continuousAttributeIndexes = new List<int>();
+                List<int> continuousAttributeIndexes = new List<int>();   
                 for(int i = 0; i < tuples[0].Count - 1; i++)
-                {
+                {                  
                     if(tuples[0].ElementAt(i).dataType == 'C')
                     {
                         continuousAttributeIndexes.Add(i);
                     }
                 }
 
-                //if there are continunous data in the matrix, we need to reclassify it by finding split points
-                if (continuousAttributeIndexes.Count > 0)
+                //now that we know how many contininous attributes there are and the indexes, we can build a list possible split points
+                List<List<double>> allPossibleSplitPoints = new List<List<double>>();
+                foreach(int continuousIndex in continuousAttributeIndexes)
                 {
-                    //for each continous attribute, create a list of all data, but only the attribute nodes we care about
-                    foreach(int index in continuousAttributeIndexes)
+                    List<double> possibleSplitPoints = new List<double>();
+                    foreach(List<AttributeNode> tuple in tuples)
                     {
-                        List<AttributeNode> currentContData = new List<AttributeNode>();
-                        foreach(List<AttributeNode> tuple in tuples)
-                        {
-                            currentContData.Add(tuple.ElementAt(index));
-                        }
-
-                        //once we have a list of every attribute value, then we need to find the best split point
+                        possibleSplitPoints.Add(tuple[0].continuous);
                     }
+                    
+                    allPossibleSplitPoints.Add(possibleSplitPoints);
                 }
+
+
 
 
                 //build decision tree
                 Tree DecisionTree = new Tree(tuples, attributeList, numberOfClasses);
+                DecisionTree.removeAllContinuous(continuousAttributeIndexes, allPossibleSplitPoints);
                 DecisionTree.StartTree();
                 //Test.Text += DecisionTree.ViewAll();
                 decisionTreeOutput = DecisionTree.PrintTree();
@@ -241,28 +239,10 @@ namespace ML_DecisionTreeClassifier
             }
         }
 
+        
 
-        private List<List<AttributeNode>> TransformContinuousData(List<List<AttributeNode>> inputData)
-        {
-            //create new list that will be returned once data has been read in
-            List<List<AttributeNode>> newList = new List<List<AttributeNode>>();
 
-            //parse through a line to see how many continuous attributes there are
-            List<AttributeNode> firstLine = inputData[0];
-            List<int> continuousIndex = new List<int>();
-            for(int i = 0; i < firstLine.Count(); i++)
-            {
-                //add the index of each continuous attribute
-                if(firstLine[i].dataType == 'C')
-                {
-                    continuousIndex.Add(i);
-                }
-            }
-
-            //FIND A WAY TO EITHER SPLIT OR BIN THE CONTINUOUS DATA
-
-            return newList;
-        }
+       
 
         //This function is for reading the file in one line and displaying the contents to the window
         private void SpeedRead(string filepath)

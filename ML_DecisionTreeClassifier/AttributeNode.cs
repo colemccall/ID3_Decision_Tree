@@ -15,6 +15,7 @@ namespace ML_DecisionTreeClassifier
         public int integer;
         public double continuous;
         public bool split;
+        public bool converted;
 
         public AttributeNode(string classLabel, char dataType, string data)
         {
@@ -22,6 +23,7 @@ namespace ML_DecisionTreeClassifier
             this.dataType = dataType;
             this.word = data;
             split= false;
+            converted = true;
         }
 
         public AttributeNode(string classLabel, char dataType, int data)
@@ -39,6 +41,7 @@ namespace ML_DecisionTreeClassifier
             this.dataType = dataType;
             this.continuous = data; 
             split = false;
+            converted = false;
 
         }
 
