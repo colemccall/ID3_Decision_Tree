@@ -27,7 +27,7 @@ namespace ML_DecisionTreeClassifier
             {
                 //we want to keep the actual line in tact, so lets create a copy
                 List<AttributeNode> currentLine = new List<AttributeNode>();
-                foreach(AttributeNode attribute in line)
+                foreach (AttributeNode attribute in line)
                 {
                     if (attribute.converted == false)
                         currentLine.Add(new AttributeNode(attribute.classLabel, attribute.dataType, attribute.continuous));
@@ -68,10 +68,10 @@ namespace ML_DecisionTreeClassifier
         {
             //start out with the base data matrix
             List<List<AttributeNode>> updatedMatrix = new List<List<AttributeNode>>(TupleData);
-            
 
-            
-            for(int i = 0; i < continuousIndexes.Count; i++)
+
+
+            for (int i = 0; i < continuousIndexes.Count; i++)
             {
                 //for each continuous attribute, create a list of the new possible matrixes
                 List<List<List<AttributeNode>>> possibleNewMatrixes = new List<List<List<AttributeNode>>>();
@@ -85,7 +85,7 @@ namespace ML_DecisionTreeClassifier
                 }
 
                 //once we have all of our possible new matrices, we need to calculate information gain for these matrices
-                List<TreeNode> possibleNodes = new List<TreeNode>();    
+                List<TreeNode> possibleNodes = new List<TreeNode>();
 
                 foreach (List<List<AttributeNode>> possibleMatrix in possibleNewMatrixes)
                 {
@@ -98,7 +98,7 @@ namespace ML_DecisionTreeClassifier
                 int bestInformationGainIndex = 0;
                 for (int j = 0; j < possibleNodes.Count; j++)
                 {
-                    if(possibleNodes[j].informationGain > bestInformationGain)
+                    if (possibleNodes[j].informationGain > bestInformationGain)
                     {
                         bestInformationGain = possibleNodes[j].informationGain;
                         bestInformationGainIndex = j;
@@ -117,21 +117,21 @@ namespace ML_DecisionTreeClassifier
         {
             List<string> possibleValues = new List<string>();
 
-            foreach(List<AttributeNode> line in attributeSubset)
+            foreach (List<AttributeNode> line in attributeSubset)
             {
                 string currentAnswer = line.Last().word;
-                if(!possibleValues.Contains(currentAnswer))
+                if (!possibleValues.Contains(currentAnswer))
                     possibleValues.Add(currentAnswer);
             }
 
 
-            if(possibleValues.Count == 1)
+            if (possibleValues.Count == 1)
                 return true;
             else
                 return false;
         }
 
-       
+
         public TreeNode BuildTreeRecursively(List<List<AttributeNode>> dataset)
         {
             //create a list of possible nodes to place on tree
@@ -139,7 +139,7 @@ namespace ML_DecisionTreeClassifier
 
             //foreach remaining attribute, calculate information gain and add it to the list
             int attributesRemaining = dataset[0].Count() - 1;
-            for(int i = 0; i < attributesRemaining; i++)
+            for (int i = 0; i < attributesRemaining; i++)
             {
                 possibleNodes.Add(calculateInformationGain(dataset, i));
             }
@@ -181,7 +181,7 @@ namespace ML_DecisionTreeClassifier
                 //add the modified line back to the new table
                 updatedData.Add(line);
             }
-            
+
 
             //build subsets to be used for finding children
             List<List<List<AttributeNode>>> subsets = new List<List<List<AttributeNode>>>();
@@ -218,6 +218,7 @@ namespace ML_DecisionTreeClassifier
                     TreeNode child = new TreeNode(excludeAttribute, answerSubset[0].Last().word, possibleValue);
                     selectedNode.AddChild(child);
                 }
+
                 else
                 {
                     selectedNode.attributeValue = "needs more";
@@ -232,6 +233,28 @@ namespace ML_DecisionTreeClassifier
             //otherwise, find information gain for each of the remaining attribute through recursion
             for (int i = 0; i < subsets.Count; i++)
             {
+                //check to see if everything in the subset belongs to the same class
+                //List<List<AttributeNode>> currentSubset = subsets[i];
+                //if (currentSubset[0].Count == 2 && subsets.Count == 1)
+                //{
+                //    //since there is only one attribute and an answer, and we have already checked to see if all the answers are the same
+                //    //now we need to vote
+                //    //we should check to see if there are enough attributes remaining to split on
+
+                //    string currentAnswer = Vote(currentSubset) + " (vote)";
+                //    string currentClass = currentSubset[0].First().word;
+
+                //    //old method was just taking the first value and saying its inconclsuive
+                //    //string currentAnswer = answerSubset[0].Last().word + " -> not enough features";
+
+                //    TreeNode child = new TreeNode(excludeAttribute, currentAnswer, currentClass);
+                //    selectedNode.AddChild(child);
+                //}
+                //else
+                //{
+
+
+
                 //otherwise create a child and add it to the list
                 TreeNode child = BuildTreeRecursively(subsets[i]);
                 child.attribute = excludeAttribute;
@@ -239,16 +262,60 @@ namespace ML_DecisionTreeClassifier
 
                 //once the children have been created, add them to the children list
                 selectedNode.AddChild(child);
+
             }
-
-
-            
-            
 
             //return the new node
             return selectedNode;
 
         }
+
+
+        private string Vote(List<List<AttributeNode>> answerMatrix)
+        {
+          
+
+            List<string> possibleResults = new List<string>();
+            List<int> possibleIndexCount = new List<int>();
+
+            //parse through our current matrix and check to see what the frequency are of each answer
+            for(int i = 0; i < answerMatrix.Count; i++)
+            {
+                AttributeNode answerNode = answerMatrix[i].Last();
+                if (!possibleResults.Contains(answerNode.word))
+                {
+                    possibleResults.Add(answerNode.word);
+                    possibleIndexCount.Add(1);
+                }
+                else
+                {
+                    for(int j = 0; j < possibleResults.Count; j++)  
+                    {
+                        if(possibleResults[j] == answerNode.word)
+                        {
+                            possibleIndexCount[j]++;
+                        }
+                    }
+                }
+            }
+
+            //once we have the frequency of each answer, we need to check to see which is the highest
+            int maxAnswer = 0;
+            string bestAnswer = "none";
+
+            for(int i = 0; i < possibleIndexCount.Count; i++)
+            {
+                if(possibleIndexCount[i] > maxAnswer)
+                {
+                    maxAnswer = possibleIndexCount[i];
+                    bestAnswer = possibleResults[i];
+                }
+            }
+
+
+            return bestAnswer;
+        }
+
 
         public void StartTree()
         {
@@ -267,6 +334,8 @@ namespace ML_DecisionTreeClassifier
             if (node.attributeValue != "none" && node.attributeValue != "needs more")
             {
                 display += node.attribute + " is " + node.attributeValue + ":";
+                    if(node.informationGain != 0)
+                       display += "  (" + node.informationGain + ")";
             }
 
             if (node.Children.Count == 0)

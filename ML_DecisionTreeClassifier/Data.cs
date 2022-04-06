@@ -52,7 +52,7 @@ namespace ML_DecisionTreeClassifier
         }
 
         public Data(int value, string attributeType, string answer)
-        {
+        { 
             //set value and attribute type
             this.integer = value;
             this.attributeType = attributeType;

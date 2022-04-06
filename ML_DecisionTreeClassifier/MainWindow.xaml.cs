@@ -23,6 +23,7 @@ namespace ML_DecisionTreeClassifier
     {
         private string filedir = Directory.GetCurrentDirectory() + "\\.." + "\\.." + "\\..";
         private string decisionTreeOutput;
+        private char delimiter { get; set; }    
 
         public MainWindow()
         {
@@ -41,8 +42,37 @@ namespace ML_DecisionTreeClassifier
             ReadFile(filepath);
         }
 
+        private void getDelimiter()
+        {
+            //this method opends a new window, allows the user to decide if the file is a .txt or .csv
+            //and then returns the filename before closing the window
+            SelectType selectWindow = new SelectType();
+            selectWindow.Show();
+
+            //some type of wait here
+            while (!selectWindow.buttonPressed )
+            {
+                selectWindow.Activate();
+                delimiter = selectWindow.dataType;
+            }
+
+            selectWindow.Close();
+        }
+
         private void ReadFile(string filePath)
         {
+            //this just creates a loop that prevents the user from using the window
+            //getDelimiter();
+
+            
+            string fileType = FileTypeBox.Text;
+
+            if (fileType == ".csv" || fileType == "csv")
+                delimiter = ',';        
+            else
+                delimiter = ' ';
+            
+
             try
             { 
                 //Open file
@@ -51,9 +81,18 @@ namespace ML_DecisionTreeClassifier
                 MessageBox.Show("File opened");
 
                 //Read in number of classes
-                int numberOfClasses = Convert.ToInt32(reader.ReadLine());
+                int numberOfClasses;
+                if (delimiter == ',')
+                {
+                    string currentLine = reader.ReadLine();
+                    var currentSections = currentLine.Split(new char[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
+                    numberOfClasses = Convert.ToInt32(currentSections[0]);
+                }
+                else
+                    numberOfClasses = Convert.ToInt32(reader.ReadLine());
                 Display.Text = "Number of classes: " + numberOfClasses.ToString() + "\n";
                 Test.Text = "";
+                OutfileBox.Text = "";
 
                 //List to keep track of what classes this file contains
                 List<string> classes = new List<string>();
@@ -65,13 +104,13 @@ namespace ML_DecisionTreeClassifier
                 List<string> attributeList = new List<string>();
 
                 //Parse the next few lines to get classes and possible values
-                for (int i = 1; i <= numberOfClasses + 1; i++)
+                for (int i = 0; i <= numberOfClasses; i++)
                 {
                     //Read entire line
                     string line = reader.ReadLine();
-                    
+
                     //Split it into parts
-                    string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] parts = line.Split(new char[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
                     
                     //First partition is the class name -> called type
                     string type = parts[0];
@@ -127,7 +166,7 @@ namespace ML_DecisionTreeClassifier
                 {
                     //Read the line and split into partitions based on spaces
                     string line = reader.ReadLine();
-                    string [] parts = line.Split(new char[] {' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string [] parts = line.Split(new char[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
                     
                     
                     //Create a list that contains all the nodes on one line
@@ -200,7 +239,6 @@ namespace ML_DecisionTreeClassifier
 
                 //before building the decision tree, call a function that will calculate a split point for each continuous class of data
                 //then convert the continous data to a string based on the split point
-                List<List<AttributeNode>> finalTuples = new List<List<AttributeNode>>();
 
                 //check the first line in the data matrix to see how many continuous attributes there are
                 List<int> continuousAttributeIndexes = new List<int>();   
@@ -265,6 +303,14 @@ namespace ML_DecisionTreeClassifier
         private void CircuitButton_Click(object sender, RoutedEventArgs e)
         {
             string filepath = filedir + "\\testDataA4\\circuit.in";
+            ReadFile(filepath);
+        }
+
+        private void TestOneSamples_Click(object sender, RoutedEventArgs e)
+        {
+            string filepath = "G:/Shared drives/Machine Learning FireMAP Semester Project/ArcGIS/TrainingData/SVM/Test_1/mesa_training_1_with_annotations.csv";
+            FileTypeBox.Text = "csv";
+            delimiter = ',';
             ReadFile(filepath);
         }
 
@@ -409,5 +455,7 @@ namespace ML_DecisionTreeClassifier
                 MessageBox.Show("Failure - file either could not be opened or could not print contents to file");
             }
         }
+
+        
     }
 }

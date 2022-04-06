@@ -5,22 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ML_DecisionTreeClassifier"
         mc:Ignorable="d"
-        Title="MainWindow" Height="851" Width="1530">
+        Title="MainWindow" Height="851" Width="1800">
     <Grid Margin="0,0,0,0">
 
         <Rectangle HorizontalAlignment="Left" Height="792" Margin="445,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="234"/>
         <Rectangle x:Name="SelectCustomBackground" HorizontalAlignment="Left" Height="792" Stroke="Black" VerticalAlignment="Center" Width="415" Margin="11,0,0,0"/>
-        <Rectangle HorizontalAlignment="Left" Height="792" Margin="1105,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
-        <TextBlock x:Name="Display" HorizontalAlignment="Left" Margin="17,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="562" Width="395" RenderTransformOrigin="0.5,0.5">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-0.144"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.497"/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
+        <Rectangle HorizontalAlignment="Left" Height="792" Margin="1105,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="662"/>
+        <TextBox x:Name="Display" HorizontalAlignment="Left" Margin="21,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="541" Width="395" />
+        <TextBox x:Name="FileInput" HorizontalAlignment="Left" Margin="709,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="398"/>
         <Label Content="a.in&#xD;&#xA;" HorizontalAlignment="Left" Margin="445,34,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
         <Button x:Name="RunA" Content="Run" HorizontalAlignment="Left" Margin="585,34,0,0" VerticalAlignment="Top" Height="28" Width="82" Click="RunA_Click"/>
         <Label Content="circuit.in" HorizontalAlignment="Left" Margin="445,67,0,0" VerticalAlignment="Top" Height="28" Width="79"/>
@@ -61,19 +53,22 @@
         <TextBox x:Name="FileSelected" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="53" Margin="16,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="395" TextChanged="FileSelected_TextChanged"/>
         <Rectangle HorizontalAlignment="Left" Height="792" Margin="701,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="382"/>
         <Label Content="Original Input File" HorizontalAlignment="Left" Margin="709,30,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
-        <TextBox x:Name="FileInput" HorizontalAlignment="Left" Margin="709,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="398"/>
-        <TextBox x:Name="Test" HorizontalAlignment="Left" Height="625" Margin="1119,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="354"/>
+        <TextBox x:Name="Test" HorizontalAlignment="Left" Height="670" Margin="1119,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="635"/>
         <Button x:Name="TestTreeButton" Content="Run" HorizontalAlignment="Left" Margin="585,595,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="testTree_Click"/>
         <Label Content="testTree.in" HorizontalAlignment="Left" Margin="445,595,0,0" VerticalAlignment="Top" Height="28" Width="100"/>
         <Label Content="Decision Tree" HorizontalAlignment="Left" Margin="1119,29,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1123,705,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="45" Width="354" FontSize="14" Text="If you would like to print the decision tree to a file, please enter the name of the file, then press PRINT"/>
-        <TextBox x:Name="OutputFileName" HorizontalAlignment="Left" Margin="1238,764,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Height="27" FontSize="14"/>
-        <Label Content="Output File Name:" HorizontalAlignment="Left" Margin="1123,764,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,1.196" Width="110"/>
-        <Button x:Name="PrintButton" Content="Print" HorizontalAlignment="Left" Margin="1416,764,0,0" VerticalAlignment="Top" Height="27" Width="47" Click="PrintButton_Click"/>
-        <TextBlock x:Name="SelectInstructions" Grid.Column="1" HorizontalAlignment="Left" Margin="18,143,0,0" TextWrapping="Wrap" Text="You can also select a file by selecting an option from the dropdown" VerticalAlignment="Top" Width="391" Height="27" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="FileOptions" Grid.Column="1" HorizontalAlignment="Left" Margin="16,170,0,0" VerticalAlignment="Top" Width="395" Height="28" Grid.ColumnSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1123,735,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="631" FontSize="14" Text="If you would like to print the decision tree to a file, please enter the name of the file, then press PRINT"/>
+        <TextBox x:Name="OutputFileName" HorizontalAlignment="Left" Margin="1284,764,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="319" Height="27" FontSize="14"/>
+        <Label Content="Output File Name:" HorizontalAlignment="Left" Margin="1169,765,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,1.196" Width="110"/>
+        <Button x:Name="PrintButton" Content="Print" HorizontalAlignment="Left" Margin="1618,763,0,0" VerticalAlignment="Top" Height="27" Width="47" Click="PrintButton_Click" RenderTransformOrigin="3.83,0.039"/>
+        <TextBlock x:Name="SelectInstructions" HorizontalAlignment="Left" Margin="20,147,0,0" TextWrapping="Wrap" Text="Select a file by choosing an option from the dropdown" VerticalAlignment="Top" Width="297" Height="22"/>
+        <ComboBox x:Name="FileOptions" HorizontalAlignment="Left" Margin="16,170,0,0" VerticalAlignment="Top" Width="299" Height="28"/>
         <Label Content="Original Output File" HorizontalAlignment="Left" Margin="709,464,0,0" VerticalAlignment="Top" Height="38" Width="125"/>
         <TextBox x:Name="OutfileBox" HorizontalAlignment="Left" Margin="709,496,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="295"/>
+        <TextBlock HorizontalAlignment="Left" Margin="332,147,0,0" TextWrapping="Wrap" Text="File Type" VerticalAlignment="Top" Width="79" Height="22" TextAlignment="Center"/>
+        <TextBox x:Name="FileTypeBox" HorizontalAlignment="Left" Height="28" Margin="332,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="79" TextAlignment="Center"/>
+        <Button x:Name="TestOneSamplesButton" Content="Run" HorizontalAlignment="Left" Margin="585,630,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="TestOneSamples_Click"/>
+        <Label Content="test_1_samples.csv" HorizontalAlignment="Left" Margin="445,630,0,0" VerticalAlignment="Top" Height="28" Width="135"/>
 
 
 
