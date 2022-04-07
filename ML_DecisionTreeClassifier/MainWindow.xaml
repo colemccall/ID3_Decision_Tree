@@ -67,8 +67,10 @@
         <TextBox x:Name="OutfileBox" HorizontalAlignment="Left" Margin="709,496,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="366" Height="295"/>
         <TextBlock HorizontalAlignment="Left" Margin="332,147,0,0" TextWrapping="Wrap" Text="File Type" VerticalAlignment="Top" Width="79" Height="22" TextAlignment="Center"/>
         <TextBox x:Name="FileTypeBox" HorizontalAlignment="Left" Height="28" Margin="332,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="79" TextAlignment="Center"/>
-        <Button x:Name="TestOneSamplesButton" Content="Run" HorizontalAlignment="Left" Margin="585,630,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="TestOneSamples_Click"/>
+        <Button x:Name="TestOneSamplesButton" Content="Run" HorizontalAlignment="Left" Margin="585,630,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="TestOneSamples_Click" RenderTransformOrigin="-0.012,1.073"/>
         <Label Content="test_1_samples.csv" HorizontalAlignment="Left" Margin="445,630,0,0" VerticalAlignment="Top" Height="28" Width="135"/>
+        <Button x:Name="DiabetesStressTest" Content="Run" HorizontalAlignment="Left" Margin="584,664,0,0" VerticalAlignment="Top" Width="82" Height="28" Click="StressTest_Click"/>
+        <Label Content="stress_test.txt" HorizontalAlignment="Left" Margin="443,665,0,0" VerticalAlignment="Top" Height="28" Width="136"/>
 
 
 

@@ -334,8 +334,8 @@ namespace ML_DecisionTreeClassifier
             if (node.attributeValue != "none" && node.attributeValue != "needs more")
             {
                 display += node.attribute + " is " + node.attributeValue + ":";
-                    if(node.informationGain != 0)
-                       display += "  (" + node.informationGain + ")";
+                //if(node.informationGain != 0)
+                //display += "  (" + node.informationGain + ")";
             }
 
             if (node.Children.Count == 0)

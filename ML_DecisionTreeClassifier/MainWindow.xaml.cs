@@ -300,9 +300,11 @@ namespace ML_DecisionTreeClassifier
             stream.Close();
         }
 
-        private void CircuitButton_Click(object sender, RoutedEventArgs e)
+        private void StressTest_Click(object sender, RoutedEventArgs e)
         {
-            string filepath = filedir + "\\testDataA4\\circuit.in";
+            string filepath = filedir + "\\semesterProjectData\\diabetes_dataset.txt";
+            FileTypeBox.Text = "txt";
+            delimiter = ' ';
             ReadFile(filepath);
         }
 
@@ -311,6 +313,12 @@ namespace ML_DecisionTreeClassifier
             string filepath = "G:/Shared drives/Machine Learning FireMAP Semester Project/ArcGIS/TrainingData/SVM/Test_1/mesa_training_1_with_annotations.csv";
             FileTypeBox.Text = "csv";
             delimiter = ',';
+            ReadFile(filepath);
+        }
+
+        private void CircuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filepath = filedir + "\\testDataA4\\circuit.in";
             ReadFile(filepath);
         }
 
