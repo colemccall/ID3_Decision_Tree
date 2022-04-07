@@ -20,12 +20,15 @@ namespace ML_DecisionTreeClassifier
     /// </summary>
     public partial class DataInterface : Window
     {
+        private string semesterProjectDirectory { get; set; }   
+
         public DataInterface()
         {
             InitializeComponent();
+            semesterProjectDirectory = "G:/Shared drives/Machine Learning FireMAP Semester Project/ArcGIS/TrainingData";
         }
 
-        
+
         private void RunProgram(string filePath)
         {
             char delimiter = ',';
@@ -53,6 +56,12 @@ namespace ML_DecisionTreeClassifier
                 string filepath = openFileDialog.FileName;
                 RunProgram(filepath);
             }
+        }
+
+        private void TestOneButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filepath = semesterProjectDirectory + "/SVM/Test_1/mesa_training_1_with_annotations.csv";
+            RunProgram(filepath);
         }
     }
 }

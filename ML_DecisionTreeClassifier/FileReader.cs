@@ -36,8 +36,20 @@ namespace ML_DecisionTreeClassifier
             {
                 //Open file
                 StreamReader reader = new StreamReader(filePath);
+                
+                //get the name of the file to display to the user
+                string fileName;
 
-                MessageBox.Show("File opened");
+                var fileline = filePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                var otherfileline = filePath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (fileline.Length > otherfileline.Length)
+                    fileName = fileline.Last();
+                else
+                    fileName = otherfileline.Last();
+
+
+                MessageBox.Show(fileName + " opened");
 
                 //Read in number of classes
                 int numberOfClasses;

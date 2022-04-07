@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="56,73,0,0" TextWrapping="Wrap" Text="Select a file -&gt;" VerticalAlignment="Top" Width="93" FontSize="14" Height="24"/>
         <Button x:Name="WindowsExplorerButton" Content="Select" HorizontalAlignment="Left" Margin="154,72,0,0" VerticalAlignment="Top" Height="25" Width="71" Click="WindowsExplorerButton_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="56,132,0,0" TextWrapping="Wrap" Text="More Options" VerticalAlignment="Top" FontSize="14" Height="24" Width="101"/>
-        <Button x:Name="TestOneButton" Content="TestOne" HorizontalAlignment="Left" Margin="56,161,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
+        <Button x:Name="TestOneButton" Content="TestOne" HorizontalAlignment="Left" Margin="56,161,0,0" VerticalAlignment="Top" Height="34" Width="78" Click="TestOneButton_Click"/>
         <Button x:Name="TestTwoButton" Content="TestTwo" HorizontalAlignment="Left" Margin="154,161,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
         <Button x:Name="TestThreeButton" Content="TestThree" HorizontalAlignment="Left" Margin="56,216,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
         <Button x:Name="TestFourButton" Content="TestFour" HorizontalAlignment="Left" Margin="154,216,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
