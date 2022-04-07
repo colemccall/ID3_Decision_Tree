@@ -122,7 +122,7 @@ namespace ML_DecisionTreeClassifier
 
 
                 //Read in remaining values
-                Display += "\nTuples\n";
+                //Display += "\nTuples\n";
                 while (!reader.EndOfStream)
                 {
                     //Read the line and split into partitions based on spaces
@@ -160,19 +160,19 @@ namespace ML_DecisionTreeClassifier
                     }
 
 
-                    //Test to see if line is being read in correctly
-                    foreach (AttributeNode node in currentLine)
-                    {
-                        if (node.dataType == 'C')
-                            Display += node.continuous + " ";
-                        if (node.dataType == 'S')
-                            Display += node.word + " ";
-                    }
+                    ////Test to see if line is being read in correctly
+                    //foreach (AttributeNode node in currentLine)
+                    //{
+                    //    if (node.dataType == 'C')
+                    //        Display += node.continuous + " ";
+                    //    if (node.dataType == 'S')
+                    //        Display += node.word + " ";
+                    //}
 
 
                     //Add the data from each line to a list of tuples
                     tuples.Add(currentLine);
-                    Display += "\n";
+                    //Display += "\n";
                 }
 
 

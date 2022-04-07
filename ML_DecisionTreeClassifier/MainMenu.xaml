@@ -1,0 +1,19 @@
+﻿<Window x:Class="ML_DecisionTreeClassifier.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ML_DecisionTreeClassifier"
+        mc:Ignorable="d"
+        Title="Decision Tree Main Menu" Height="400" Width="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Iterative Decision Tree" VerticalAlignment="Top" FontSize="24" FontFamily="Arial Rounded MT Bold" FontWeight="Bold"/>
+        <TextBlock x:Name="Program_1" HorizontalAlignment="Left" Margin="22,58,0,0" TextWrapping="Wrap" Text="Program 1: Launch the TestDataA4 Window" VerticalAlignment="Top" Height="30" Width="425" FontSize="20"/>
+        <TextBlock x:Name="Program_1_Copy" HorizontalAlignment="Left" Margin="22,241,0,0" TextWrapping="Wrap" Text="Program 2: Launch the Semester Project Data Interface" VerticalAlignment="Top" Height="30" Width="508" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Width="584"><Run Text="This program will launch a window that will allow the user to work with every dataset available in the testDataA4 directory. For each of these files, there are corresponding .in and .out files that will show what each file contains and what the expected tree will look like. This window was designed for testing the testDataA4 dataset required as part of the Decision Tree programming assignment in the Machine Learning course "/><LineBreak/><Run/><LineBreak/><Run Text="NOTE: perfect for .txt files"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="22,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="87" Width="584"><Run Text="This program will launch an entirely separate window, built to work with any type of large dataset."/><LineBreak/><Run Text="Add more later"/><LineBreak/><Run/><LineBreak/><Run Text="NOTE: perfect for and only works on .csv files"/></TextBlock>
+        <Button x:Name="Program1Button" Content="Run Program 1" HorizontalAlignment="Left" Margin="611,93,0,0" VerticalAlignment="Top" Height="90" Width="158" FontSize="20" FontWeight="Bold" Click="Program1Button_Click"/>
+        <Button x:Name="Program2Button" Content="Run Program 2" HorizontalAlignment="Left" Margin="611,256,0,0" VerticalAlignment="Top" Height="90" Width="158" FontSize="20" FontWeight="Bold" Click="Program2Button_Click"/>
+
+    </Grid>
+</Window>

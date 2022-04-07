@@ -17,27 +17,26 @@ namespace ML_DecisionTreeClassifier
     /// <summary>
     /// Interaction logic for SelectType.xaml
     /// </summary>
-    public partial class SelectType : Window
+    public partial class MainMenu : Window
     {
-        public char dataType { get; set; }
-        public bool buttonPressed { get; set; }
-        public SelectType()
+        
+        public MainMenu()
         {
             InitializeComponent();
-            dataType = 'a';
-            buttonPressed = false;
+           
         }
 
-        private void CommaButton_Click(object sender, RoutedEventArgs e)
+        private void Program1Button_Click(object sender, RoutedEventArgs e)
         {
-            dataType = ',';
-            buttonPressed = true;
+            //open the window made for running testDataA4
+            TestDataA4 window = new TestDataA4();
+            window.Show();
         }
 
-        private void TextButton_Click(object sender, RoutedEventArgs e)
+        private void Program2Button_Click(object sender, RoutedEventArgs e)
         {
-            dataType = ' ';
-            buttonPressed = true;
+            DataInterface window = new DataInterface();
+            window.Show();
         }
     }
 }

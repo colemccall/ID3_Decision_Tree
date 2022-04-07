@@ -19,13 +19,13 @@ using System.Numerics;
 
 namespace ML_DecisionTreeClassifier
 {
-    public partial class MainWindow : Window
+    public partial class TestDataA4 : Window
     {
         private string filedir = Directory.GetCurrentDirectory() + "\\.." + "\\.." + "\\..";
         private string decisionTreeOutput;
         private char delimiter { get; set; }    
 
-        public MainWindow()
+        public TestDataA4()
         {
             InitializeComponent();
         }

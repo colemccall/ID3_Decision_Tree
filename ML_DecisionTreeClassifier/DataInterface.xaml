@@ -1,0 +1,23 @@
+﻿<Window x:Class="ML_DecisionTreeClassifier.DataInterface"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ML_DecisionTreeClassifier"
+        mc:Ignorable="d"
+        Title="DataInterface" Height="900" Width="1300">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,23,0,0" TextWrapping="Wrap" Text="Semester Project Interface" VerticalAlignment="Top" Height="37" Width="310" FontSize="24"/>
+        <TextBlock HorizontalAlignment="Left" Margin="56,73,0,0" TextWrapping="Wrap" Text="Select a file -&gt;" VerticalAlignment="Top" Width="93" FontSize="14" Height="24"/>
+        <Button x:Name="WindowsExplorerButton" Content="Select" HorizontalAlignment="Left" Margin="154,72,0,0" VerticalAlignment="Top" Height="25" Width="71" Click="WindowsExplorerButton_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="56,132,0,0" TextWrapping="Wrap" Text="More Options" VerticalAlignment="Top" FontSize="14" Height="24" Width="101"/>
+        <Button x:Name="TestOneButton" Content="TestOne" HorizontalAlignment="Left" Margin="56,161,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
+        <Button x:Name="TestTwoButton" Content="TestTwo" HorizontalAlignment="Left" Margin="154,161,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
+        <Button x:Name="TestThreeButton" Content="TestThree" HorizontalAlignment="Left" Margin="56,216,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
+        <Button x:Name="TestFourButton" Content="TestFour" HorizontalAlignment="Left" Margin="154,216,0,0" VerticalAlignment="Top" Height="34" Width="78"/>
+        <TextBox x:Name="OutputTree" HorizontalAlignment="Left" Margin="310,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="924" Height="755"/>
+        <TextBox x:Name="Parameters" HorizontalAlignment="Left" Margin="32,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" Height="263" RenderTransformOrigin="-0.099,0.725"/>
+        <TextBox x:Name="OutFile" HorizontalAlignment="Left" Margin="32,565,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" Height="263" RenderTransformOrigin="-0.099,0.725"/>
+
+    </Grid>
+</Window>
