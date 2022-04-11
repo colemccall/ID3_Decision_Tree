@@ -1,0 +1,121 @@
+Metadata
+Time: ~15 seconds
+Memory ~ 2GB
+
+
+Pregnancies is <=6:
+	DiabetesPedigreeFunction is <=1:
+		SkinThickness is >7:
+			Glucose is >6:
+				BMI is <=6:
+					ans:0
+				BMI is >6:
+					BloodPressure is <=6:
+						ans:0
+					BloodPressure is >6:
+						Insulin is <=14:
+							Age is >6:
+								ans:
+						Insulin is >14:
+							Age is >6:
+								ans:
+			Glucose is <=6:
+				Insulin is >14:
+					ans:0
+				Insulin is <=14:
+					Age is >6:
+						BMI is >6:
+							BloodPressure is >6:
+								ans:
+		SkinThickness is <=7:
+			BMI is <=6:
+				ans:0
+			BMI is >6:
+				BloodPressure is >6:
+					Insulin is >14:
+						ans:0
+					Insulin is <=14:
+						Age is >6:
+							Glucose is >6:
+								ans:
+				BloodPressure is <=6:
+					Age is >6:
+						Insulin is <=14:
+							Glucose is >6:
+								ans:
+	DiabetesPedigreeFunction is >1:
+		BMI is <=6:
+			ans:0
+		BMI is >6:
+			Insulin is >14:
+				Age is >6:
+					SkinThickness is >7:
+						BloodPressure is >6:
+							Glucose is >6:
+								ans:
+			Insulin is <=14:
+				Age is >6:
+					SkinThickness is >7:
+						BloodPressure is >6:
+							Glucose is >6:
+								ans:
+					SkinThickness is <=7:
+						BloodPressure is >6:
+							Glucose is >6:
+								ans:
+Pregnancies is >6:
+	SkinThickness is <=7:
+		Insulin is >14:
+			ans:1
+		Insulin is <=14:
+			BMI is >6:
+				BloodPressure is >6:
+					DiabetesPedigreeFunction is <=1:
+						Age is >6:
+							Glucose is >6:
+								ans:
+					DiabetesPedigreeFunction is >1:
+						Age is >6:
+							Glucose is >6:
+								ans:
+				BloodPressure is <=6:
+					Age is >6:
+						DiabetesPedigreeFunction is <=1:
+							Glucose is >6:
+								ans:
+			BMI is <=6:
+				BloodPressure is >6:
+					ans:1
+				BloodPressure is <=6:
+					Age is >6:
+						DiabetesPedigreeFunction is <=1:
+							Glucose is >6:
+								ans:
+	SkinThickness is >7:
+		DiabetesPedigreeFunction is <=1:
+			BloodPressure is <=6:
+				ans:1
+			BloodPressure is >6:
+				Insulin is <=14:
+					Age is >6:
+						BMI is >6:
+							Glucose is >6:
+								ans:
+				Insulin is >14:
+					Age is >6:
+						BMI is >6:
+							Glucose is >6:
+								ans:
+		DiabetesPedigreeFunction is >1:
+			Insulin is >14:
+				Age is >6:
+					BMI is >6:
+						BloodPressure is >6:
+							Glucose is >6:
+								ans:
+			Insulin is <=14:
+				Age is >6:
+					BMI is >6:
+						BloodPressure is >6:
+							Glucose is >6:
+								ans:
