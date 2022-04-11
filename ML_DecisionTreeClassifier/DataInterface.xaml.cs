@@ -63,5 +63,11 @@ namespace ML_DecisionTreeClassifier
             string filepath = semesterProjectDirectory + "/SVM/Test_1/mesa_training_1_with_annotations.csv";
             RunProgram(filepath);
         }
+
+        private void TestTwoButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filepath = semesterProjectDirectory + "/SVM/Test_2/Test_2_Training_Samples.csv";
+            RunProgram(filepath);
+        }
     }
 }

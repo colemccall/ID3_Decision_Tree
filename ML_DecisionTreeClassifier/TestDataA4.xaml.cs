@@ -52,6 +52,7 @@ namespace ML_DecisionTreeClassifier
             OutfileBox.Text = reader.OutFile;
             FileInput.Text = reader.InFile;
             Test.Text = reader.TreeOutput;
+            decisionTreeOutput = reader.TreeOutput;
         }
 
 
