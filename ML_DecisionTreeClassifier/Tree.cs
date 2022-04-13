@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ML_DecisionTreeClassifier
 {
@@ -149,6 +150,7 @@ namespace ML_DecisionTreeClassifier
 
             //select subsets from dataset, excluding the attribute that was just selected
             string excludeAttribute = selectedNode.attribute;
+            string excludeAttributeValue = selectedNode.attributeValue;
 
             //list that removes the current attribute (column) from table
             List<List<AttributeNode>> updatedData = new List<List<AttributeNode>>();
@@ -233,35 +235,25 @@ namespace ML_DecisionTreeClassifier
             //otherwise, find information gain for each of the remaining attribute through recursion
             for (int i = 0; i < subsets.Count; i++)
             {
-                //check to see if everything in the subset belongs to the same class
-                //List<List<AttributeNode>> currentSubset = subsets[i];
-                //if (currentSubset[0].Count == 2 && subsets.Count == 1)
-                //{
-                //    //since there is only one attribute and an answer, and we have already checked to see if all the answers are the same
-                //    //now we need to vote
-                //    //we should check to see if there are enough attributes remaining to split on
-
-                //    string currentAnswer = Vote(currentSubset) + " (vote)";
-                //    string currentClass = currentSubset[0].First().word;
-
-                //    //old method was just taking the first value and saying its inconclsuive
-                //    //string currentAnswer = answerSubset[0].Last().word + " -> not enough features";
-
-                //    TreeNode child = new TreeNode(excludeAttribute, currentAnswer, currentClass);
-                //    selectedNode.AddChild(child);
-                //}
-                //else
-                //{
-
-
 
                 //otherwise create a child and add it to the list
-                TreeNode child = BuildTreeRecursively(subsets[i]);
-                child.attribute = excludeAttribute;
-                child.attributeValue = subsetValues[i];
+                List<List<AttributeNode>> currentSubset = subsets[i];
+                if (currentSubset.Count() == updatedData.Count())
+                {
+                    //since splitting into the subset does not help, lets vote
+                    //TreeNode child = new TreeNode(excludeAttribute, Vote(currentSubset), excludeAttributeValue);
+                    selectedNode.finalAnswer = Vote(currentSubset);
+                    //selectedNode.AddChild(child);
+                }
+                else
+                {
+                    TreeNode child = BuildTreeRecursively(subsets[i]);
+                    child.attribute = excludeAttribute;
+                    child.attributeValue = subsetValues[i];
 
-                //once the children have been created, add them to the children list
-                selectedNode.AddChild(child);
+                    //once the children have been created, add them to the children list
+                    selectedNode.AddChild(child);
+                }
 
             }
 
