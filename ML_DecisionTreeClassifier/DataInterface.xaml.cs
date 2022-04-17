@@ -102,5 +102,18 @@ namespace ML_DecisionTreeClassifier
                 MessageBox.Show("Failure - file either could not be opened or could not print contents to file");
             }
         }
+
+        private void ClassifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Process.Start("explorer.exe", @"C:\Users");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filepath = openFileDialog.FileName;
+                MessageBox.Show("TODO - this button should take " + filepath + " and classify it based on the decision tree");
+
+            }
+
+        }
     }
 }
