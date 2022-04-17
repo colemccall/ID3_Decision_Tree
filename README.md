@@ -18,8 +18,17 @@ The purpose of this program is to load in a training dataset, read the contents,
 3. Launch the GUI
   - `ML_DecisionTreeClassifier.exe`
 
-# Using the Decision Tree Program
 Once you have cloned the decison tree repo and opened the decision tree app, you will have several options.
+![image](https://user-images.githubusercontent.com/94725863/163695601-27685f9c-eb09-458d-aec7-d6e4fc929d86.png)
+
+Program 1 was specifcally designed for COMP4330 Machine Learning class. This program is able to read in any training data file from the testDataA4 dataset. The testDataA4 dataset has two text files for each set of training tuples: a .in file and a .out file. The .in file contains the number of classes, their possible values, and then a list of tuples. The .out file contains the expected decison tree
+
+Program 2 was designed to integrate the decsion tree project with training data created using ArcGIS. Using Worldview2 satellite imagery, training polygons are created by sampling areas of the image where the result is known. The band values for each polygon are calculated by averaging the value of each pixel within the polygon, and these tuples can be used to determine which bands contain the most information.
+
+# Program 1: Using the TestDataA4 Dataset
+
+By clicking the `Run Program 1` button, a new window is launched
+
 ![image](https://user-images.githubusercontent.com/94725863/161444748-646fd760-2765-4b49-a34d-734ba760ae17.png)
 
 By clicking on the select button in the top left, you will be able to select a file from the windows explorer. Make sure that this file is a .txt or .in file and follows specific file requirements
@@ -41,6 +50,38 @@ At the bottom of the center box, under the label `Original Output File`, the exp
 At the top of the far right box, under the label `Decision Tree`, is the actual decision tree that was created using this program. There are some minor discrepencies that can be ignored for now, but will be addressed late.
 
 At the bottom of the far right box, is a small message that explains how the results from the decision tree can be stored. If you want to save the results to a file, type in the name of the new file in the `Output File Name` box and click print. The results will be stored in `ML_DecisionTreeClassifier/outputs`
+
+# Program 2: Creating Decision Trees Based on ArcGIS Polygons
+
+By clicking the `Run Program 2` button, a different window is launched
+
+![image](https://user-images.githubusercontent.com/94725863/163695763-80eeb458-feaf-43cd-8ed0-6c90518bd7af.png)
+
+At the current stage, this window is still a bit messy.
+
+By clicking the `Select` button, the windows file explorer will be launched. This will allow you to select training data to build the tree.
+If you are looking for what this training should look like or are struggling to export the data from ArcGIS, try using the data stored on [this shared Google Drive](https://drive.google.com/drive/folders/165VSdZHOWSoL0JYhdSIS8qL0oo2QHZBm?usp=sharing)
+
+![image](https://user-images.githubusercontent.com/94725863/163695857-443b6e7c-a4f7-42be-b733-44540925a7e7.png)
+
+
+Several default training data files can also be selected, although the links may not work. The MaskRCNN training data is used to build a tree based off of two classes: `tree` and `not tree`. The SVM training data is used to build a tree based off of four classes: `black ash`, `white ash`, `unburned surface`, and `unburned tree`.
+
+![image](https://user-images.githubusercontent.com/94725863/163695895-b8882079-f3c9-4cd5-a090-5f86f8bc73ef.png)
+
+
+Once training data has been selected, a decision tree will be created and displayed in the window to the right. On the left are two boxes, one that displays the number of classes and possible answers. 
+
+
+To save the decision tree to a .txt file, enter the name of the file you would like to create, then press `print`.
+
+![image](https://user-images.githubusercontent.com/94725863/163695915-267d7e6e-5e1b-426a-8058-47bc13dc5225.png)
+
+
+In the future, I would like to allow the user to add another input file once the tree has been built. This data will be classified based on the tree that has already been built and can be used to either validate known data or classify unknown data.
+
+![image](https://user-images.githubusercontent.com/94725863/163695929-d3dceb53-91d7-4fa2-868c-ce342effc917.png)
+
 
 # Future Work
 - Continuous Data Bugs
