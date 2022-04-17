@@ -11,7 +11,7 @@ The purpose of this program is to load in a training dataset, read the contents,
   - `git clone https://github.com/colemccall/DecisionTreeCSharp.git DecisionTree`
 
 
-2. Using the recently cloned ConnectedComponentApp directory, navigate to the executable location
+2. Using the recently cloned DecisionTree directory, navigate to the executable location
   - `cd DecisionTree\ML_DecisionTreeClassifier\bin\Debug\net6.0-windows`
 
 
