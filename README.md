@@ -1,4 +1,4 @@
-# DecisionTreeCSharp
+# DecisionTree 
 
 # Background
 This program was created by Cole McCall in the Spring 2022 Semester at Northwest Nazarene University. This program was created in order to complete the Decision Tree assignment requirements. All code for this project was written in C#.
